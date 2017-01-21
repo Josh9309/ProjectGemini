@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e4395c4e2b095a14881b7fd95a590a9f
+timeCreated: 1484970497
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Amateur Dirty
+  fontNames:
+  - Amateur Dirty
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
