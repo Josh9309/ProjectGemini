@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerCamera : MonoBehaviour {
     GameObject player;
+    [SerializeField]
+    private float dist = 30.5f;
     // Use this for initialization
     void Start () {
         player = GameObject.Find("Player");
@@ -11,7 +13,6 @@ public class playerCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = new Vector3(player.transform.position.x - 20, 60, player.transform.position.z);
-        transform.LookAt(player.transform);
+        transform.position = new Vector3(player.transform.position.x, 60, player.transform.position.z - dist);
     }
 }
