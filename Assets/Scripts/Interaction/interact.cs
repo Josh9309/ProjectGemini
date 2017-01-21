@@ -21,7 +21,7 @@ public class interact : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             //calculates distance between player and object, only activates if distance is close enough
-            GameObject player = GameObject.Find("player");
+            GameObject player = GameObject.Find("Player");
             Vector3 coords1 = player.transform.position;
             Vector3 coords2 = gameObject.transform.position;
 
