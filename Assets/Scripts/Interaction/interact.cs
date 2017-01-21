@@ -39,6 +39,12 @@ public class interact : MonoBehaviour {
                     case "lightSwitch":
                         GetComponent<lightSwitch>().activate();
                         break;
+                    case "key":
+                        GetComponent<key>().activate(player);
+                        break;
+                    case "lockedDoor":
+                        GetComponent<lockedDoor>().activate(player);
+                        break;
                 }
             }
 
