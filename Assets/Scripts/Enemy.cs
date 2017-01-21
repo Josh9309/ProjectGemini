@@ -10,11 +10,12 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private float visionAngle;
     private NavMeshAgent agent;
+    private DetectionSphere detectionSphere;
 
     // Use this for initialization
     void Start () {
         agent = GetComponent<NavMeshAgent>();
-        //agent.destination = target.transform.position;
+        detectionSphere = GetComponentInChildren<DetectionSphere>();
 	}
 
     /// <summary>
@@ -41,11 +42,11 @@ public class Enemy : MonoBehaviour {
 
         Debug.Log(angle);
 
-        Debug.DrawLine(transform.position, transform.position + transform.forward.normalized * 1.5f);
-        Debug.DrawRay(transform.position, Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward);
-        Debug.DrawRay(transform.position, Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward);
+        //Debug.DrawLine(transform.position, transform.position + transform.forward.normalized * 1.5f);
+        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward * 5);
+        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward * 5);
 
-        if (angle > visionAngle || (direction.normalized.x * 5 < direction.x && direction.normalized.y * 5 < direction.y))
+        if (angle > visionAngle)
         {
             return false;
         }
@@ -70,7 +71,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		if (VisionCone())
+		if (VisionCone() || detectionSphere.PlayerDetected)
         {
             agent.destination = target.transform.position;
         }

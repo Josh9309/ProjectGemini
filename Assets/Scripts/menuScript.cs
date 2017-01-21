@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class menuScript : MonoBehaviour
 {
     public Canvas exitMenu;
+    public Canvas optionsMenu;
     public Button start;
     public Button exit;
     public Button options;
@@ -17,11 +18,14 @@ public class menuScript : MonoBehaviour
     {
         //instantiate values
         exitMenu = exitMenu.GetComponent<Canvas>();
+        optionsMenu = optionsMenu.GetComponent<Canvas>();
         start = start.GetComponent<Button>();
         exit = exit.GetComponent<Button>();
         options = options.GetComponent<Button>();
         credits = credits.GetComponent<Button>();
         exitMenu.enabled = false;
+        optionsMenu.enabled = false;
+
     }
 
     //exit button
@@ -30,6 +34,7 @@ public class menuScript : MonoBehaviour
         //enable exit menu
         //disable start menu 
         exitMenu.enabled = true;
+        optionsMenu.enabled = false;
         start.enabled = false;
         exit.enabled = false;
         options.enabled = false;
@@ -42,6 +47,7 @@ public class menuScript : MonoBehaviour
         //dissable quit menu
         //enable start menu
         exitMenu.enabled = false;
+        optionsMenu.enabled = false;
         start.enabled = true;
         exit.enabled = true;
         options.enabled = true;
@@ -59,8 +65,19 @@ public class menuScript : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OptionsPressed()
+    {
+        exitMenu.enabled = false;
+        optionsMenu.enabled = true;
+        start.enabled = false;
+        exit.enabled = false;
+        options.enabled = false;
+        credits.enabled = false;
+    }
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
 		
 	}
 }
