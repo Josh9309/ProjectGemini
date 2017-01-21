@@ -41,6 +41,7 @@ public class menuScript : MonoBehaviour
         audio = audio.GetComponent<Slider>();
         back = back.GetComponent<Button>();
 
+        creditsMenu.enabled =  false;
         exitMenu.enabled = false;
         optionsMenu.enabled = false;
         no.enabled = false;
@@ -73,6 +74,7 @@ public class menuScript : MonoBehaviour
         resolution.enabled = false;
         audio.enabled = false;
         back.enabled = false;
+        creditsMenu.enabled = false;
     }
 
     //No
@@ -92,6 +94,7 @@ public class menuScript : MonoBehaviour
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
+        creditsMenu.enabled = false;
         back.enabled = false;
     }
 
@@ -124,6 +127,7 @@ public class menuScript : MonoBehaviour
         audio.enabled = true;
         apply.enabled = true;
         back.enabled = false;
+        creditsMenu.enabled = false;
     }
 
     public void ApplyPressed()
@@ -136,7 +140,7 @@ public class menuScript : MonoBehaviour
         options.enabled = true;
         credits.enabled = true;
         back.enabled = false;
-
+        creditsMenu.enabled = false;
         no.enabled = false;
         yes.enabled = false;
         fullscreen.enabled = false;
@@ -155,7 +159,7 @@ public class menuScript : MonoBehaviour
         options.enabled = true;
         credits.enabled = true;
         back.enabled = true;
-
+        creditsMenu.enabled = true;
         no.enabled = false;
         yes.enabled = false;
         fullscreen.enabled = false;
@@ -176,6 +180,7 @@ public class menuScript : MonoBehaviour
         credits.enabled = true;
         no.enabled = false;
         yes.enabled = false;
+        creditsMenu.enabled = false;
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
