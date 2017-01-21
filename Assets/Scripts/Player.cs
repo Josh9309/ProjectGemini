@@ -14,9 +14,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerRotationSpeed;
     [SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
-
+    private int health = 1;
     //Properties
-
+    public int Health
+    {
+        get { return health; }
+        set
+        {
+            health = value;
+        }
+    }
 
     void Start() //Use this for initialization
     {
@@ -29,6 +36,7 @@ public class Player : MonoBehaviour
         Move();
         Ping();
         Interact();
+        Die();
     }
 
     void Move() //Player movement
@@ -131,6 +139,10 @@ public class Player : MonoBehaviour
 
     void Die() //This kills the crab
     {
-
+        if(health <= 0)
+        {
+            Debug.Log("player has died!");
+            Destroy(gameObject);
+        }
     }
 }
