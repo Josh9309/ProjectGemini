@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     private int health = 1;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
+    private int pingAmount = 100;
+
     //Properties
     public int Health
     {
@@ -26,6 +28,18 @@ public class Player : MonoBehaviour
         set
         {
             health = value;
+        }
+    }
+
+    public int PingAmount
+    {
+        get
+        {
+            return pingAmount;
+        }
+        set
+        {
+            pingAmount = value;
         }
     }
 
