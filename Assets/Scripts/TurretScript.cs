@@ -116,4 +116,10 @@ public class TurretScript : MonoBehaviour {
         yield return new WaitForSeconds(2);
         ammo = 5;
     }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        //Gizmos.DrawSphere(transform.position, 1);
+    }
 }

@@ -9,8 +9,6 @@ public class Enemy : MonoBehaviour {
     private GameObject target;
     [SerializeField]
     private float visionAngle;
-    [SerializeField]
-    private float objectRadius;
     private NavMeshAgent agent;
 
     // Use this for initialization
@@ -41,10 +39,14 @@ public class Enemy : MonoBehaviour {
 
         float angle = Vector3.Angle(direction, transform.forward);
 
-        if (angle < 90 - visionAngle || angle > 90 + visionAngle)
-        {
-            Debug.Log(angle);
+        Debug.Log(angle);
 
+        Debug.DrawLine(transform.position, transform.position + transform.forward.normalized * 1.5f);
+        Debug.DrawRay(transform.position, Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward);
+        Debug.DrawRay(transform.position, Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward);
+
+        if (angle > visionAngle || (direction.normalized.x * 5 < direction.x && direction.normalized.y * 5 < direction.y))
+        {
             return false;
         }
         else
@@ -53,7 +55,7 @@ public class Enemy : MonoBehaviour {
 
             Physics.Raycast(transform.position, direction, out hit);
 
-            Debug.Log(hit.transform.gameObject.name);
+            //Debug.Log(hit.transform.gameObject.name);
 
             if (hit.transform.gameObject == target)
             {

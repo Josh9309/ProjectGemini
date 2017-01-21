@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: dd52f2d18c80ae84794d4999e5196208
+timeCreated: 1484970497
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Amateur Naked
+  fontNames:
+  - Amateur Naked
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
