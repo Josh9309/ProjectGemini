@@ -33,53 +33,35 @@ public class Player : MonoBehaviour
 
     void Move() //Player movement
     {
-        //transform.Rotate(0, Input.GetAxis("Horizontal") * Time.deltaTime * playerRotationSpeed, 0); //Rotate the player
+        ////Mouse Rotation
+        //Plane playerPlane = new Plane(Vector3.up, transform.position); //Plane intersecting the player's position, normal is up
         //
-        //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
+        //Ray playerRaycast = Camera.main.ScreenPointToRay(Input.mousePosition); //Raycast from the position of the mouse
+        //
+        //float rayHitDistance = 0.0f; //The distance from the plane to the raycast
+        //
+        //if (playerPlane.Raycast(playerRaycast, out rayHitDistance)) //If the raycast is parallel to the plane, the raycast will return as false
         //{
-        //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
+        //    Vector3 target = playerRaycast.GetPoint(rayHitDistance); //Get the point on the ray that is at the correct distance
+        //    Quaternion targetRotation = Quaternion.LookRotation(target - transform.position); //Rotate to the target point
+        //
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime); //Rotate the player towards the target point
+        //}
+
+        //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05 || Mathf.Abs(Input.GetAxis("Horizontal")) > .05) //If the player should move
+        //{
+        //    movement += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * playerMoveSpeed * 3, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
+        //    //transform.Rotate(0, Mathf.Atan2(movement.x, movement.z) * playerRotationSpeed * Time.deltaTime, 0);
+        //    //transform.rotation = Quaternion.LookRotation(movement);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), Time.fixedDeltaTime * playerRotationSpeed);
+        //    transform.forward = Vector3.Normalize(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
         //}
         //else //If the player should stop
         //{
         //    movement = Vector3.zero;
         //}
-        //
-        //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = playerMoveSpeed;
-        //}
-        //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = -playerMoveSpeed;
-        //}
-        //
-        //transform.Translate(movement); //Move the player
-
-
-
-        Debug.DrawLine(transform.position, Input.mousePosition, Color.red);
-        
-        //transform.LookAt(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y)); //Rotate the player
-
-        //transform.rotation = Quaternion.LookRotation(Vector3.forward, Input.mousePosition); //Rotate the player
-
-        //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
-        //{
-        //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
-        //}
-        //else //If the player should stop
-        //{
-        //    movement = Vector3.zero;
-        //}
-        //
-        //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = playerMoveSpeed;
-        //}
-        //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = -playerMoveSpeed;
-        //}
+        //Debug.Log(transform.forward);
+        //movement = new Vector3(Mathf.Clamp(movement.x, -playerMoveSpeed, playerMoveSpeed), Mathf.Clamp(movement.y, -playerMoveSpeed, playerMoveSpeed), Mathf.Clamp(movement.z, -playerMoveSpeed, playerMoveSpeed));
         //
         //transform.Translate(movement); //Move the player
     }
