@@ -102,8 +102,8 @@ public class ColorMenu : MonoBehaviour
     {
         if (sceneName == "GameScene")
         {
-            GameManager.Instance.playerColor = playerTextureRenderer.material.color;
-            GameManager.Instance.enemyColor = enemyUITextureRenderer.material.color;
+            GameManager.playerColor = playerTextureRenderer.material.color;
+            GameManager.enemyColor = enemyUITextureRenderer.material.color;
         }
 
         SceneManager.LoadScene(sceneName);
