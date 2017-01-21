@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     //Attributes
     private GameObject pingObj;
     private Rigidbody playerRB;
+    public int keycount;
+    public bool win = false;
     //[SerializeField] private float playerRotationSpeed;
     //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
@@ -39,6 +41,16 @@ public class Player : MonoBehaviour
         Ping();
         Interact();
         Die();
+
+        if (keycount > 2)
+        {
+            win = true;
+        }
+    }
+
+    public void incrimentKeyCounter()
+    {
+        keycount++;
     }
 
     //void Move() //Player movement
