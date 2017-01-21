@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
     private int health = 1;
+    [SerializeField] private Material white;
+    [SerializeField] private Material highlightColor;
     //Properties
     public int Health
     {
@@ -105,14 +107,22 @@ public class Player : MonoBehaviour
         MeshRenderer[] thingRender = thing.GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer render in thingRender)
         {
-            render.enabled = true;
+            //float elapsedTime = 0f;
+            //float time = 1;
+            //while (elapsedTime < 3)
+            //{
+            //    render.material.color = Color.Lerp(white.color, highlightColor.color, (elapsedTime/ time));
+            //    elapsedTime += Time.deltaTime;
+            //}
+            render.material = highlightColor;
         }
 
         yield return new WaitForSeconds(3);
 
         foreach (MeshRenderer render in thingRender)
         {
-            render.enabled = false;
+            //render.material.color = Color.Lerp(highlightColor.color, white.color, 10);
+            render.material = white;
         }
     }
 
