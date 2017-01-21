@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     private List<GameObject> patrolRoute;
     private List<bool> visitedWaypoints;
     private GameObject currentWaypoint;
+    private bool reverse;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +24,10 @@ public class Enemy : MonoBehaviour {
         Debug.Log(patrolRoute.Count);
 
         visitedWaypoints = new List<bool>();
+
+        currentWaypoint = patrolRoute[0];
+
+        reverse = false;
 
         // assign a default value of false for each waypoint in the patrol route
         for (int i = 0; i < patrolRoute.Count; i++)
@@ -89,41 +94,71 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void Patrol()
     {
-        for (int i = 0; i < patrolRoute.Count; i++)
+        agent.destination = currentWaypoint.transform.position;
+
+        if (visitedWaypoints[visitedWaypoints.Count - 1] == true)
         {
-            if (visitedWaypoints[i] == false)
+            currentWaypoint = patrolRoute[visitedWaypoints.Count - 2];
+
+            reverse = true;
+
+            for (int i = 0; i < visitedWaypoints.Count; i++)
             {
-                while (visitedWaypoints[i] == false)
-                {
-                    agent.destination = patrolRoute[i].transform.position;
+                visitedWaypoints[i] = false;
+            }
+        }
 
-                    currentWaypoint = patrolRoute[i];
-                }
+        if (visitedWaypoints[0] == true)
+        {
+            currentWaypoint = patrolRoute[1];
 
-                if (currentWaypoint == patrolRoute[patrolRoute.Count])
-                {
-                    for (int j = 0; j < visitedWaypoints.Count; j++)
-                    {
-                        visitedWaypoints[i] = false;
-                    }
-                }
+            reverse = false;
+
+            for (int i = 0; i < visitedWaypoints.Count; i++)
+            {
+                visitedWaypoints[i] = false;
             }
         }
     }
 
     /// <summary>
-    /// dectecting when an enemy hits a waypoint
+    /// dectecting when an enemy hits a waypoint, updates the previous
+    /// waypoint and sets the new one
     /// </summary>
     /// <param name="coll"></param>
     public void OnTriggerEnter(Collider coll)
     {
-        if (coll.transform.tag == "Waypoint")
+        if (coll.transform.tag == "Waypoint" && reverse == false)
         {
-            for (int i = 0; i < visitedWaypoints.Count; i++)
+            for (int i = 0; i < patrolRoute.Count; i++)
             {
-                if (visitedWaypoints[i] == false)
+                if (coll.gameObject == patrolRoute[i])
                 {
                     visitedWaypoints[i] = true;
+
+                    if (i != patrolRoute.Count - 1)
+                    {
+                        currentWaypoint = patrolRoute[i + 1];
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        if (coll.transform.tag == "Waypoint" && reverse == true)
+        {
+            for (int i = 0; i < patrolRoute.Count; i++)
+            {
+                if (coll.gameObject == patrolRoute[i])
+                {
+                    visitedWaypoints[i] = true;
+
+                    if (i != 0)
+                    {
+                        currentWaypoint = patrolRoute[i - 1];
+                    }
+
                     return;
                 }
             }
