@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
 
@@ -11,7 +12,8 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.destination = target.transform.position;
 	}
 
     /// <summary>
