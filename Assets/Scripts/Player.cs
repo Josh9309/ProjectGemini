@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
     //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
     private int health = 1;
+    private int noise = 0;
+    private bool crouch;
+    private bool move;
+    private Transform lastPos;
+    private Vector3 colliderScale;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
     //Properties
@@ -31,14 +36,26 @@ public class Player : MonoBehaviour
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
+        colliderScale = GetComponent<CapsuleCollider>().center; //assign to the capsule coliders center
+        crouch = false; //set inital value
+        move = false;
     }
 
     void Update() //Update is called once per frame
     {
+        //update crouch and movement bools
+        crouch = Input.GetKey(KeyCode.C);
+        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
+
         //Move();
         Ping();
         Interact();
         Die();
+        ScaleColliderToNoise();
+
+        //update lastPos
+        lastPos = gameObject.transform;
+
     }
 
     //void Move() //Player movement
@@ -99,6 +116,42 @@ public class Player : MonoBehaviour
         if(Input.GetButtonDown("Fire1") == true)
         {
             pingObj.GetComponent<Animator>().Play("Pinging");
+        }
+
+
+    }
+
+    void ScaleColliderToNoise()
+    {
+        //make noise 100 if not crouched
+        if(!crouch)
+        {
+            noise = 1000;
+            return; //leave method
+        }
+
+        //up noise whilst moving- pos has changed
+        if(!move)
+        {
+            //shhh! youre being loud
+            noise += 2; //up noise
+            colliderScale += new Vector3(0.1f, 0.1f, 0.1f); //grow collider
+        }
+        else
+        {
+            //dont move, it can only see motion
+            noise -= 1;
+            colliderScale -= new Vector3(0.1f, 0.1f, 0.1f); //shrink collider
+        }
+
+        //check minmax noise
+        if(noise < 0)
+        {
+            noise = 0;
+        }
+        else if(noise > 1000)
+        {
+            noise = 1000;
         }
     }
 
