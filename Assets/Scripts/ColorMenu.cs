@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ColorMenu : MonoBehaviour
 {
     [SerializeField] private Renderer playerTextureRenderer; //The player's texture renderer
-    [SerializeField] private Renderer enemyTextureRenderer; //The enemy's texture renderer
+    //[SerializeField] private Renderer enemyTextureRenderer; //The enemy's texture renderer
     [SerializeField] private Renderer enemyUITextureRenderer; //The enemy's UI texture renderer
     private UnityEngine.UI.Image[] colorBoxes = new UnityEngine.UI.Image[11]; //The UI color boxes
     private UnityEngine.UI.Text[] UIText = new UnityEngine.UI.Text[2]; //The UI text
@@ -22,7 +22,7 @@ public class ColorMenu : MonoBehaviour
         //enemyTextureRenderer = m_Enemy.GetComponent<Renderer>(); //Get the enemy's texture renderer
 
         playerTextureRenderer.material.color = Color.black;
-        enemyTextureRenderer.material.color = Color.black;
+        //enemyTextureRenderer.material.color = Color.black;
 
         UnityEngine.UI.Image[] allUIImages = FindObjectsOfType<UnityEngine.UI.Image>();
         int numColorBoxes = 0;
@@ -85,11 +85,27 @@ public class ColorMenu : MonoBehaviour
     {
         currentColorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(2, 2);
         model.material.color = currentColorBox.color; //Set the color of the model
+
+        if (model.name.Contains("Player"))
+        {
+            playerTextureRenderer.material.color = model.material.color;
+        }
+        else if(model.name.Contains("Enemy"))
+        {
+            enemyUITextureRenderer.material.color = model.material.color;
+        }
+
         shouldPingPong = false;
     }
 
     public void SceneChange(string sceneName)
     {
+        if (sceneName == "GameScene")
+        {
+            GameManager.Instance.playerColor = playerTextureRenderer.material.color;
+            GameManager.Instance.enemyColor = enemyUITextureRenderer.material.color;
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 
