@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
+
 public class Player : MonoBehaviour
 {
     //Attributes
-
 
     //Properties
 
