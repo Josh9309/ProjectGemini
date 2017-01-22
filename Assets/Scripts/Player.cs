@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
     private bool hasPing;
+    [SerializeField] private float pingCooldownTime;
     [SerializeField] private float pingTime;
 
     //SOUND!
@@ -106,7 +107,7 @@ public class Player : MonoBehaviour
     {
         hasPing = false;
 
-        yield return new WaitForSeconds(pingTime);
+        yield return new WaitForSeconds(pingCooldownTime);
 
         hasPing = true;
     }
@@ -179,7 +180,7 @@ public class Player : MonoBehaviour
             render.material = highlightColor;
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(pingTime);
 
         foreach (MeshRenderer render in thingRender)
         {
@@ -190,15 +191,25 @@ public class Player : MonoBehaviour
 
     public IEnumerator HighlightEnemy(GameObject enemy) //Highlights the enemy
     {
-        MeshRenderer[] enemyRender = enemy.GetComponentsInChildren<MeshRenderer>();
-        foreach(MeshRenderer render in enemyRender)
+        SkinnedMeshRenderer[] enemyRender = enemy.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach(SkinnedMeshRenderer render in enemyRender)
         {
             render.enabled = true;
         }
 
-        yield return new WaitForSeconds(3);
+        MeshRenderer[] enemyRender2 = enemy.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer render in enemyRender2)
+        {
+            render.enabled = true;
+        }
 
-        foreach (MeshRenderer render in enemyRender)
+        yield return new WaitForSeconds(pingTime);
+
+        foreach (SkinnedMeshRenderer render in enemyRender)
+        {
+            render.enabled = false;
+        }
+        foreach (MeshRenderer render in enemyRender2)
         {
             render.enabled = false;
         }
