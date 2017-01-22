@@ -11,12 +11,20 @@ public class Player : MonoBehaviour
     //Attributes
     private GameObject pingObj;
     private Rigidbody playerRB;
-    [SerializeField] private float playerRotationSpeed;
-    [SerializeField] private float playerMoveSpeed;
+    public int keycount;
+    public bool win = false;
+    //[SerializeField] private float playerRotationSpeed;
+    //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
     private int health = 1;
+    private int noise = 0;
+    private bool crouch;
+    private bool move;
+    private SphereCollider crouchCollider;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
+    private int pingAmount = 100;
+
     //Properties
     public int Health
     {
@@ -27,78 +35,153 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int PingAmount
+    {
+        get
+        {
+            return pingAmount;
+        }
+        set
+        {
+            pingAmount = value;
+        }
+    }
+
     void Start() //Use this for initialization
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
+        crouchCollider = GetComponent<SphereCollider>(); //assign to the capsule coliders center
+        crouch = false; //set inital value
+        move = false;
     }
 
     void Update() //Update is called once per frame
     {
-        Move();
+        //update crouch and movement bools
+        crouch = Input.GetKey(KeyCode.C);
+        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
+
+        //Move();
         Ping();
         Interact();
         Die();
+
+        ScaleColliderToNoise();
+
+        if (keycount > 2)
+        {
+            win = true;
+        }
     }
 
-    void Move() //Player movement
+    public void incrimentKeyCounter()
     {
-        //transform.Rotate(0, Input.GetAxis("Horizontal") * Time.deltaTime * playerRotationSpeed, 0); //Rotate the player
-        //
-        //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
-        //{
-        //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
-        //}
-        //else //If the player should stop
-        //{
-        //    movement = Vector3.zero;
-        //}
-        //
-        //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = playerMoveSpeed;
-        //}
-        //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = -playerMoveSpeed;
-        //}
-        //
-        //transform.Translate(movement); //Move the player
-
-
-
-        Debug.DrawLine(transform.position, Input.mousePosition, Color.red);
-        
-        //transform.LookAt(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y)); //Rotate the player
-
-        //transform.rotation = Quaternion.LookRotation(Vector3.forward, Input.mousePosition); //Rotate the player
-
-        //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
-        //{
-        //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
-        //}
-        //else //If the player should stop
-        //{
-        //    movement = Vector3.zero;
-        //}
-        //
-        //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = playerMoveSpeed;
-        //}
-        //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
-        //{
-        //    movement.z = -playerMoveSpeed;
-        //}
-        //
-        //transform.Translate(movement); //Move the player
+        keycount++;
     }
+
+    //void Move() //Player movement
+    //{
+    //    //transform.Rotate(0, Input.GetAxis("Horizontal") * Time.deltaTime * playerRotationSpeed, 0); //Rotate the player
+    //    //
+    //    //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
+    //    //{
+    //    //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
+    //    //}
+    //    //else //If the player should stop
+    //    //{
+    //    //    movement = Vector3.zero;
+    //    //}
+    //    //
+    //    //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
+    //    //{
+    //    //    movement.z = playerMoveSpeed;
+    //    //}
+    //    //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
+    //    //{
+    //    //    movement.z = -playerMoveSpeed;
+    //    //}
+    //    //
+    //    //transform.Translate(movement); //Move the player
+    //
+    //
+    //
+    //    //Debug.DrawLine(transform.position, Input.mousePosition, Color.red);
+    //    
+    //    //transform.LookAt(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y)); //Rotate the player
+    //
+    //    //transform.rotation = Quaternion.LookRotation(Vector3.forward, Input.mousePosition); //Rotate the player
+    //
+    //    //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
+    //    //{
+    //    //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
+    //    //}
+    //    //else //If the player should stop
+    //    //{
+    //    //    movement = Vector3.zero;
+    //    //}
+    //    //
+    //    //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
+    //    //{
+    //    //    movement.z = playerMoveSpeed;
+    //    //}
+    //    //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
+    //    //{
+    //    //    movement.z = -playerMoveSpeed;
+    //    //}
+    //    //
+    //    //transform.Translate(movement); //Move the player
+    //}
 
     void Ping() //Player ping
     {
         if(Input.GetButtonDown("Fire1") == true)
         {
             pingObj.GetComponent<Animator>().Play("Pinging");
+        }
+
+
+    }
+
+    void ScaleColliderToNoise()
+    {
+        //make noise 100 if not crouched
+        if(!crouch)
+        {
+            noise = 0;
+            crouchCollider.enabled = false; //turn off sphere collider
+            crouchCollider.radius = 0.4f;
+            return; //leave method
+        }
+        else
+        {
+            crouchCollider.enabled = true; //turn on sphere collider
+        }
+
+        //up noise whilst moving- pos has changed
+        if(move)
+        {
+            //shhh! youre being loud
+            noise += 2; //up noise
+            crouchCollider.radius += 0.001f; //grow collider
+        }
+        else
+        {
+            //dont move, it can only see motion
+            noise -= 20;
+            crouchCollider.radius -= 0.003f; //shrink collider
+        }
+
+        //check minmax noise
+        if(noise < 0)
+        {
+            noise = 0;
+            crouchCollider.radius = 0.25f;
+        }
+        else if(noise > 425)
+        {
+            noise = 425;
+            crouchCollider.radius = .48f;
         }
     }
 
