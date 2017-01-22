@@ -6,6 +6,7 @@ public class HUDScript : MonoBehaviour
 {
     private UnityEngine.UI.Image frontCircle;
     private UnityEngine.UI.Image backCircle;
+    private UnityEngine.UI.Image frontSoundBar;
     private UnityEngine.UI.Text countdown;
     private Player playerScript;
     private List<Enemy> enemies;
@@ -26,11 +27,15 @@ public class HUDScript : MonoBehaviour
                 frontCircle = allUIImages[i];
                 frontCircle.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 1);
             }
-            if (allUIImages[i].name == "StaticCircle")
+            else if (allUIImages[i].name == "StaticCircle")
             {
                 backCircle = allUIImages[i];
                 backCircle.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100/255f);
                 defaultBackCircleColor = backCircle.color;
+            }
+            else if (allUIImages[i].name == "FillSoundBar")
+            {
+                frontSoundBar = allUIImages[i];
             }
         }
 
@@ -45,7 +50,7 @@ public class HUDScript : MonoBehaviour
             if (allGameObjects[i].tag == "Enemy")
             {
                 enemies.Add(allGameObjects[i].GetComponent<Enemy>());
-                allGameObjects[i].GetComponent<Renderer>().material.color = GameManager.enemyColor;
+                allGameObjects[i].GetComponentInChildren<Renderer>().material.color = GameManager.enemyColor;
             }
             else if (allGameObjects[i].tag == "key")
             {
@@ -67,6 +72,7 @@ public class HUDScript : MonoBehaviour
 	void Update() //Update is called once per frame
     {
         PingUI();
+        SoundUI();
 	}
 
     void PingUI() //Manage ping cooldown and enemy alert
@@ -80,7 +86,7 @@ public class HUDScript : MonoBehaviour
             frontCircle.fillAmount += Time.deltaTime / 1.5f;
         }
 
-        if (enemiesInPursuit.Count > 0)
+        if (enemiesInPursuit == null && enemiesInPursuit.Count > 0)
         {
             foreach (Enemy e in enemiesInPursuit)
             {
@@ -110,5 +116,10 @@ public class HUDScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SoundUI() //Sound with crouching and such
+    {
+        frontSoundBar.fillAmount = playerScript.Noise / 425f;
     }
 }
