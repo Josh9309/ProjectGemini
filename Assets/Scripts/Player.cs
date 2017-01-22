@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public int keycount;
     public bool win = false;
     public Material pingMat;
+    public Material enemyMat;
     //[SerializeField] private float playerRotationSpeed;
     //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
