@@ -185,6 +185,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            Player playerScript = FindObjectOfType<Player>();
+            playerScript.Health -= playerScript.Health; //"Kettle Cooked Instant Death" now with more fear!
+        }
+    }
+
     /// <summary>
     /// responsible for finding and pursuing player
     /// </summary>

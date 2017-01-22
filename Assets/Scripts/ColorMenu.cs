@@ -41,7 +41,7 @@ public class ColorMenu : MonoBehaviour
 
         for (int i = 0; i < allUIText.Length; i++) //For each UI image
         {
-            if (allUIText[i].name.Contains("Text"))
+            if (allUIText[i].name.Contains("Text")) 
             {
                 UIText[numText] = allUIText[i];
                 numText++;
@@ -111,7 +111,7 @@ public class ColorMenu : MonoBehaviour
 
     public void SceneChange(string sceneName)
     {
-        if (sceneName == "GameScene")
+        if (sceneName == "greybox")
         {
             GameManager.playerColor = playerTextureRenderer.material.color;
             GameManager.enemyColor = enemyUITextureRenderer.material.color;
