@@ -96,12 +96,12 @@ public class HUDScript : MonoBehaviour
 
         for (int i = 0; i < allGameObjects.Length; i++)
         {
-            //if (allGameObjects[i].tag == "Enemy")
-            //{
-            //    enemies.Add(allGameObjects[i].GetComponent<Enemy>());
-            //    allGameObjects[i].GetComponentInChildren<Renderer>().material.color = GameManager.enemyColor;
-            //}
-            if (allGameObjects[i].tag == "key")
+            if (allGameObjects[i].tag == "Enemy")
+            {
+                enemies.Add(allGameObjects[i].GetComponent<Enemy>());
+                allGameObjects[i].GetComponentInChildren<Renderer>().material.color = GameManager.enemyColor;
+            }
+            else if (allGameObjects[i].tag == "key")
             {
                 keys.Add(allGameObjects[i].GetComponent<key>());
                 allGameObjects[i].GetComponent<Renderer>().material.color = GameManager.playerColor;
