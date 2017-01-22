@@ -68,8 +68,8 @@ public class menuScript : MonoBehaviour
         options.enabled = false;
         credits.enabled = false;
         apply.enabled = false;
-        no.enabled = false;
-        yes.enabled = false;
+        no.enabled =true;
+        yes.enabled = true;
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
@@ -89,8 +89,8 @@ public class menuScript : MonoBehaviour
         exit.enabled = true;
         options.enabled = true;
         credits.enabled = true;
-        no.enabled = false;
-        yes.enabled = false;
+        no.enabled = true;
+        yes.enabled = true;
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
