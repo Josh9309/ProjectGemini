@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private int health = 1;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
-    private int pingAmount = 100;
+    private bool hasPinged;
 
     //Properties
     public int Health
@@ -31,15 +31,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    public int PingAmount
+    public bool HasPinged
     {
         get
         {
-            return pingAmount;
+            return hasPinged;
         }
         set
         {
-            pingAmount = value;
+            hasPinged = value;
         }
     }
 
@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
+
+        hasPinged = false;
     }
 
     void Update() //Update is called once per frame
@@ -125,6 +127,7 @@ public class Player : MonoBehaviour
         if(Input.GetButtonDown("Fire1") == true)
         {
             pingObj.GetComponent<Animator>().Play("Pinging");
+            hasPinged = true;
         }
     }
 
