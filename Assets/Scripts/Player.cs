@@ -48,6 +48,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public GameObject PingObj
+    {
+        get
+        {
+            return pingObj;
+        }
+        set
+        {
+            pingObj = value;
+        }
+    }
+
     void Start() //Use this for initialization
     {
         pingObj = GameObject.Find("Ping");
@@ -61,8 +73,8 @@ public class Player : MonoBehaviour
     void Update() //Update is called once per frame
     {
         //update crouch and movement bools
-        crouch = Input.GetKey(KeyCode.C);
-        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
+        crouch = gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().CrouchToggle();
+        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Mathf.Abs(Input.GetAxis("Horizontal")) > 0f || Mathf.Abs(Input.GetAxis("Vertical")) > 0f);
 
         //Move();
         Ping();

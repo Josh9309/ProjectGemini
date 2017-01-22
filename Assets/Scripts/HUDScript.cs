@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class HUDScript : MonoBehaviour
 {
-    private UnityEngine.UI.Image[] pingImages = new UnityEngine.UI.Image[2];
+    private UnityEngine.UI.Image frontCircle;
+    private UnityEngine.UI.Image backCircle;
+    private UnityEngine.UI.Text countdown;
     private Player playerScript;
     private List<GameObject> enemies;
     private List<GameObject> keys;
@@ -15,17 +16,22 @@ public class HUDScript : MonoBehaviour
         //GameManager.Instance
 
         UnityEngine.UI.Image[] allUIImages = GetComponentsInChildren<UnityEngine.UI.Image>();
-        int numPingImages = 0;
 
         for (int i = 0; i < allUIImages.Length; i++)
         {
-            if (allUIImages[i].name.Contains("Circle"))
+            if (allUIImages[i].name == "FillCircle")
             {
-                pingImages[numPingImages] = allUIImages[i];
-                pingImages[numPingImages].color = GameManager.playerColor;
-                numPingImages++;
+                frontCircle = allUIImages[i];
+                frontCircle.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 1);
+            }
+            if (allUIImages[i].name == "StaticCircle")
+            {
+                backCircle = allUIImages[i];
+                backCircle.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100/255f);
             }
         }
+
+        countdown = FindObjectOfType<UnityEngine.UI.Text>();
 
         GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
         enemies = new List<GameObject>();
@@ -54,17 +60,25 @@ public class HUDScript : MonoBehaviour
             }
         }
 
-        playerScript = FindObjectOfType<Player>();
-	}	
+        playerScript = FindObjectOfType<Player>();;
+    }	
 	
 	void Update() //Update is called once per frame
     {
-        //if (playerScript.HasPinged)
-        //PingUI();	
+        PingUI();	
 	}
 
     void PingUI()
     {
-        
+        if (frontCircle.fillAmount > 0 && playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length)
+        {
+            frontCircle.fillAmount -= Time.deltaTime;
+        }
+        else if (!(playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length))
+        {
+            frontCircle.fillAmount += Time.deltaTime / 1.5f;
+        }
+
+        countdown.text = ((int)(frontCircle.fillAmount * 100)).ToString();
     }
 }

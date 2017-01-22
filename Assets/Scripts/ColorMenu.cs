@@ -29,6 +29,9 @@ public class ColorMenu : MonoBehaviour
         playerTextureRenderer.material.color = Color.black;
         enemyUITextureRenderer.material.color = Color.black;
 
+        GameManager.playerColor = playerTextureRenderer.material.color;
+        GameManager.enemyColor = enemyUITextureRenderer.material.color;
+
         UnityEngine.UI.Image[] allUIImages = FindObjectsOfType<UnityEngine.UI.Image>();
         int numColorBoxes = 0;
 
@@ -72,9 +75,6 @@ public class ColorMenu : MonoBehaviour
         playerSelected = true;
         highlightEnemy.enabled = false;
         startButton.enabled = false;
-
-        GameManager.playerColor = Color.black;
-        GameManager.enemyColor = Color.black;
     }
 	
 	void Update() //Update is called once per frame
