@@ -22,11 +22,30 @@ public class Enemy : MonoBehaviour
     private bool patrol;
     private bool pursuit;
     private bool alert;
-    private bool scanning = true;
+    private bool scanning = false;
     private bool alertScan = false;
     private bool finished = false;
     private bool running = false;
     private Vector3 lastKnownLoc = Vector3.zero;
+
+    public AudioClip enemyMove1;
+    public AudioClip enemyMove2;
+
+    //public bool Alert
+    //{
+    //    get
+    //    {
+    //        return alert;
+    //    }
+    //}
+
+    public bool Pursuit
+    {
+        get
+        {
+            return pursuit;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -75,8 +94,8 @@ public class Enemy : MonoBehaviour
         //Debug.Log(angle);
 
         //Debug.DrawLine(transform.position, transform.position + transform.forward.normalized * 1.5f);
-        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward * 5);
-        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward * 5);
+        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward * 20);
+        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward * 20);
 
         if (angle > visionAngle)
         {
@@ -85,17 +104,19 @@ public class Enemy : MonoBehaviour
         else
         {
             RaycastHit hit;
-
+           
             Physics.Raycast(transform.position, direction, out hit);
 
             //Debug.Log(hit.transform.gameObject.name);
 
             if (hit.transform.gameObject == target)
             {
+                
                 return true;
             }
             else
             {
+                
                 return false;
             }
         }
@@ -148,6 +169,60 @@ public class Enemy : MonoBehaviour
             {
                 if (coll.gameObject == patrolRoute[i])
                 {
+                    //agent.Stop();
+
+                    visitedWaypoints[i] = true;
+
+                    if (i != patrolRoute.Count - 1)
+                    {
+                        currentWaypoint = patrolRoute[i + 1];
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        if (coll.transform.tag == "Waypoint" && reverse == true)
+        {
+            for (int i = 0; i < patrolRoute.Count; i++)
+            {
+                if (coll.gameObject == patrolRoute[i])
+                {
+                    //agent.Stop();
+
+                    visitedWaypoints[i] = true;
+
+                    if (i != 0)
+                    {
+                        currentWaypoint = patrolRoute[i - 1];
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        if (coll.transform.tag == "AlertPoint" && alert == true)
+        {
+            alertScan = true;
+            Destroy(coll.gameObject);
+        }
+    }
+
+    public void OnTriggerStay(Collider coll)
+    {
+        if (coll.transform.tag == "AlertPoint" && alert == true)
+        {
+            alertScan = true;
+            Destroy(coll.gameObject);
+        }
+        if (coll.transform.tag == "Waypoint" && reverse == false)
+        {
+            for (int i = 0; i < patrolRoute.Count; i++)
+            {
+                if (coll.gameObject == patrolRoute[i])
+                {
                     visitedWaypoints[i] = true;
 
                     if (i != patrolRoute.Count - 1)
@@ -177,12 +252,6 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-
-        if (coll.transform.tag == "AlertPoint" && alert == true)
-        {
-            alertScan = true;
-            Destroy(coll.gameObject);
-        }
     }
 
     private void OnCollisionEnter(Collision coll)
@@ -201,6 +270,8 @@ public class Enemy : MonoBehaviour
     {
         if (finished == false)
         {
+           
+            Debug.Log("WORK");
             agent.destination = GameObject.FindGameObjectWithTag("Player").transform.position;
             if (running == false)
             {
@@ -219,17 +290,6 @@ public class Enemy : MonoBehaviour
     internal IEnumerator Chase(float duration)
     {
         running = true;
-        //for (float t = 0f; t < 1f; t += Time.deltaTime / duration)
-        //{
-        //    agent.destination = GameObject.FindGameObjectWithTag("Player").transform.position;
-        //
-        //    if (t >= .5f)
-        //    {
-        //        finished = true;
-        //    }
-        //
-        //    yield return null;
-        //}
 
         yield return new WaitForSeconds(duration);
         finished = true;
@@ -245,91 +305,42 @@ public class Enemy : MonoBehaviour
     //private void Alert(Vector3 location)
     //{
     //    agent.destination = location;
-    //
+
     //    if (alertScan)
     //    {
     //        agent.Stop();
-    //        //Debug.Log("Destination reached");
+            
+    //        Coroutine sa =StartCoroutine(Scan(3));
+
     //        if (scanning == true)
     //        {
-    //            StartCoroutine(Rotate(Vector3.up * 20, 2));
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("Stop Scanning");
-    //            alertScan = false;
-    //            alertScan = false;
-    //            alert = false;
-    //            patrol = true;
-    //            scanning = true;
+    //            if (VisionCone() || detectionSphere.PlayerDetected)
+    //            {
+    //                StopCoroutine(sa);
+    //                alert = false;
+    //                pursuit = true;
+    //                scanning = false;
+    //                alertScan = false;
+    //            }
     //        }
     //    }
     //}
 
-    /// <summary>
-    /// will rotate a given object by angles passed in in amount of time
-    /// while also checking if the enemy can see the player
-    /// </summary>
-    /// <param name="byAngles"></param>
-    /// <param name="inTime"></param>
-    /// <returns></returns>
-    internal IEnumerator Rotate(Vector3 byAngles, float inTime)
-    {
-        while (scanning)
-        {
-            if (scanning == false)
-            {
-                yield break;
-            }
+    //internal IEnumerator Scan(float duration)
+    //{
+    //    scanning = true;
+    //    visionAngle = 60;
 
-            //scanning = true;
+    //    yield return new WaitForSeconds(duration);
 
-            Quaternion fromAngle = transform.rotation;
-            Quaternion toAngle = Quaternion.Euler(transform.eulerAngles + byAngles);
+    //    visionAngle = 20;
+    //    scanning = false;
+    //    alertScan = false;
+    //    alert = false;
+    //    patrol = true;
+    //}
 
-            for (float t = 0f; t < 1f; t += Time.deltaTime / inTime)
-            {
-                transform.rotation = Quaternion.Slerp(fromAngle, toAngle, t);
-
-                //if (VisionCone())
-                //{
-                //    pursuit = true;
-                //    scanning = false;
-                //    yield break;
-                //}
-
-                yield return null;
-            }
-
-            toAngle = Quaternion.Euler(transform.eulerAngles - (2 * byAngles));
-            fromAngle = transform.rotation;
-
-            for (float t = 0f; t < 1f; t += Time.deltaTime / inTime)
-            {
-                transform.rotation = Quaternion.Slerp(fromAngle, toAngle, t);
-
-                //if (VisionCone())
-                //{
-                //    pursuit = true;
-                //    scanning = false;
-                //    yield break;
-                //}
-
-                if (t >= .9f)
-                {
-                    scanning = false;
-                }
-
-                yield return null;
-            }
-        }
-        //scanning = false;
-
-        //if (scanning == false)
-        //{
-        //    yield break;
-        //}
-    }
+ 
 
     // Update is called once per frame
     void Update()
@@ -338,9 +349,10 @@ public class Enemy : MonoBehaviour
         if (patrol)
         {
             Patrol();
-
+       
             if (VisionCone() || detectionSphere.PlayerDetected)
             {
+                SoundManager.instance.RandomizeEnemySfx(enemyMove1);
                 //alert = true;
                 pursuit = true;
                 patrol = false;
@@ -350,15 +362,17 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        if (pursuit)
+        {
+          
+            Pursue();
+            Debug.Log(pursuit);
+        }
+
         //if (alert)
         //{
         //    Alert(lastKnownLoc);
         //}
 
-        if (pursuit)
-        {
-            Pursue();
-        }
-        
     }
 }

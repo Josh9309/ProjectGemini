@@ -23,8 +23,16 @@ public class Player : MonoBehaviour
     private SphereCollider crouchCollider;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
-    private bool hasPinged;
+    private bool hasPing;
+    private bool refillPing;
+    [SerializeField] private float pingCooldownTime;
+    [SerializeField] private float pingTime;
 
+    //SOUND!
+    public AudioClip moveSound1;
+  
+    public AudioClip ping1;
+  
     //Properties
     public int Health
     {
@@ -35,15 +43,47 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool HasPinged
+    public int Noise
     {
         get
         {
-            return hasPinged;
+            return noise;
+        }
+    }
+
+    public bool HasPing
+    {
+        get
+        {
+            return hasPing;
         }
         set
         {
-            hasPinged = value;
+            hasPing = value;
+        }
+    }
+
+    public bool RefillPing
+    {
+        get
+        {
+            return refillPing;
+        }
+        set
+        {
+            refillPing = value;
+        }
+    }
+
+    public GameObject PingObj
+    {
+        get
+        {
+            return pingObj;
+        }
+        set
+        {
+            pingObj = value;
         }
     }
 
@@ -51,7 +91,8 @@ public class Player : MonoBehaviour
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
-        hasPinged = false;
+        hasPing = true;
+        refillPing = false;
         crouchCollider = GetComponent<SphereCollider>(); //assign to the capsule coliders center
         crouch = false; //set inital value
         move = false;
@@ -60,8 +101,8 @@ public class Player : MonoBehaviour
     void Update() //Update is called once per frame
     {
         //update crouch and movement bools
-        crouch = Input.GetKey(KeyCode.C);
-        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
+        crouch = gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().CrouchToggle();
+        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Mathf.Abs(Input.GetAxis("Horizontal")) > 0f || Mathf.Abs(Input.GetAxis("Vertical")) > 0f);
 
         //Move();
         Ping();
@@ -74,6 +115,12 @@ public class Player : MonoBehaviour
         {
             win = true;
         }
+
+        if(move)
+        {
+            SoundManager.instance.RandomizeSfx(moveSound1);
+        }
+        
     }
 
     public void incrimentKeyCounter()
@@ -81,65 +128,32 @@ public class Player : MonoBehaviour
         keycount++;
     }
 
-    //void Move() //Player movement
-    //{
-    //    //transform.Rotate(0, Input.GetAxis("Horizontal") * Time.deltaTime * playerRotationSpeed, 0); //Rotate the player
-    //    //
-    //    //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
-    //    //{
-    //    //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
-    //    //}
-    //    //else //If the player should stop
-    //    //{
-    //    //    movement = Vector3.zero;
-    //    //}
-    //    //
-    //    //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
-    //    //{
-    //    //    movement.z = playerMoveSpeed;
-    //    //}
-    //    //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
-    //    //{
-    //    //    movement.z = -playerMoveSpeed;
-    //    //}
-    //    //
-    //    //transform.Translate(movement); //Move the player
-    //
-    //
-    //
-    //    //Debug.DrawLine(transform.position, Input.mousePosition, Color.red);
-    //    
-    //    //transform.LookAt(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y)); //Rotate the player
-    //
-    //    //transform.rotation = Quaternion.LookRotation(Vector3.forward, Input.mousePosition); //Rotate the player
-    //
-    //    //if (Mathf.Abs(Input.GetAxis("Vertical")) > .05) //If the player should move
-    //    //{
-    //    //    movement += new Vector3(0, 0, Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed * 3);
-    //    //}
-    //    //else //If the player should stop
-    //    //{
-    //    //    movement = Vector3.zero;
-    //    //}
-    //    //
-    //    //if (movement.z >= playerMoveSpeed) //If the player is moving too fast
-    //    //{
-    //    //    movement.z = playerMoveSpeed;
-    //    //}
-    //    //else if (movement.z < -playerMoveSpeed) //If the player is moving too fast
-    //    //{
-    //    //    movement.z = -playerMoveSpeed;
-    //    //}
-    //    //
-    //    //transform.Translate(movement); //Move the player
-    //}
+    internal IEnumerator PingCooldown()
+    {
+        hasPing = false;
+
+        yield return new WaitForSeconds(pingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        refillPing = true;
+        Debug.Log(pingCooldownTime - pingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        yield return new WaitForSeconds(pingCooldownTime - pingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        refillPing = false;
+
+        hasPing = true;
+    }
 
     void Ping() //Player ping
     {
-        if(Input.GetButtonDown("Fire1") == true)
+        if(Input.GetButtonDown("Fire1") == true && HasPing)
         {
+
+          
             pingObj.GetComponent<Animator>().Play("Pinging");
-            hasPinged = true;
+            SoundManager.instance.RandomizePingSfx(ping1);
+            StartCoroutine(PingCooldown());
+         
         }
 
 
@@ -170,7 +184,7 @@ public class Player : MonoBehaviour
         else
         {
             //dont move, it can only see motion
-            noise -= 20;
+            noise -= 3;
             crouchCollider.radius -= 0.003f; //shrink collider
         }
 
@@ -202,7 +216,7 @@ public class Player : MonoBehaviour
             render.material = highlightColor;
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(pingTime);
 
         foreach (MeshRenderer render in thingRender)
         {
@@ -213,15 +227,25 @@ public class Player : MonoBehaviour
 
     public IEnumerator HighlightEnemy(GameObject enemy) //Highlights the enemy
     {
-        MeshRenderer[] enemyRender = enemy.GetComponentsInChildren<MeshRenderer>();
-        foreach(MeshRenderer render in enemyRender)
+        SkinnedMeshRenderer[] enemyRender = enemy.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach(SkinnedMeshRenderer render in enemyRender)
         {
             render.enabled = true;
         }
 
-        yield return new WaitForSeconds(3);
+        MeshRenderer[] enemyRender2 = enemy.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer render in enemyRender2)
+        {
+            render.enabled = true;
+        }
 
-        foreach (MeshRenderer render in enemyRender)
+        yield return new WaitForSeconds(pingTime);
+
+        foreach (SkinnedMeshRenderer render in enemyRender)
+        {
+            render.enabled = false;
+        }
+        foreach (MeshRenderer render in enemyRender2)
         {
             render.enabled = false;
         }

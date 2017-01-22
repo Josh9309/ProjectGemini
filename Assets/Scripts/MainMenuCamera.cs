@@ -21,5 +21,9 @@ public class MainMenuCamera : MonoBehaviour
     void Update()
     {
         transform.position = obj.transform.position + vec;
+        if(transform.position.z > 550)
+        {
+            transform.position = vec;
+        }
     }
 }

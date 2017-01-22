@@ -67,7 +67,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			//{
 			//	HandleAirborneMovement();
 			//}
-
+            
 			ScaleCapsuleForCrouching(crouch);
 			PreventStandingInLowHeadroom();
 
