@@ -10,6 +10,7 @@ public class HUDScript : MonoBehaviour
     private UnityEngine.UI.Image frontSoundBar;
     private UnityEngine.UI.Image endgameBackground;
     private UnityEngine.UI.Image endgameBox;
+    private UnityEngine.UI.Image key0, key1, key2;
     private UnityEngine.UI.Text countdown;
     private UnityEngine.UI.Text[] endgameText = new UnityEngine.UI.Text[2];
     private UnityEngine.UI.Text mainMenuText;
@@ -50,6 +51,21 @@ public class HUDScript : MonoBehaviour
             {
                 endgameBox = allUIImages[i];
                 endgameBox.enabled = false;
+            }
+            else if (allUIImages[i].name == ("Key0"))
+            {
+                key0 = allUIImages[i];
+                key0.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100 / 255f);
+            }
+            else if (allUIImages[i].name == ("Key1"))
+            {
+                key1 = allUIImages[i];
+                key1.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100 / 255f);
+            }
+            else if (allUIImages[i].name == ("Key2"))
+            {
+                key2 = allUIImages[i];
+                key2.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100 / 255f);
             }
         }
 
@@ -106,6 +122,7 @@ public class HUDScript : MonoBehaviour
     {
         PingUI();
         SoundUI();
+        KeyUI();
         CheckGameState();
 	}
 
@@ -155,6 +172,22 @@ public class HUDScript : MonoBehaviour
     void SoundUI() //Sound with crouching and such
     {
         frontSoundBar.fillAmount = playerScript.Noise / 425f;
+    }
+
+    void KeyUI() //Keys
+    {
+        if (playerScript.keycount == 1)
+        {
+            key0.color = GameManager.playerColor;
+        }
+        else if (playerScript.keycount == 2)
+        {
+            key1.color = GameManager.playerColor;
+        }
+        else if (playerScript.keycount == 3)
+        {
+            key2.color = GameManager.playerColor;
+        }
     }
 
     void CheckGameState() //Check if the game is over
