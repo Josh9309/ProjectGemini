@@ -42,6 +42,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int Noise
+    {
+        get
+        {
+            return noise;
+        }
+    }
+
     public bool HasPing
     {
         get
