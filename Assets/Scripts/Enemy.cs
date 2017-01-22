@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour
     private bool running = false;
     private Vector3 lastKnownLoc = Vector3.zero;
 
+    public AudioClip enemyMove1;
+    public AudioClip enemyMove2;
+
     //public bool Alert
     //{
     //    get
@@ -101,17 +104,19 @@ public class Enemy : MonoBehaviour
         else
         {
             RaycastHit hit;
-
+           
             Physics.Raycast(transform.position, direction, out hit);
 
             //Debug.Log(hit.transform.gameObject.name);
 
             if (hit.transform.gameObject == target)
             {
+                SoundManager.instance.RandomizeEnemySfx(enemyMove1);
                 return true;
             }
             else
             {
+                SoundManager.instance.RandomizeEnemySfx(enemyMove2);
                 return false;
             }
         }

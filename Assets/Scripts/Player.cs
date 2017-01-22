@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     private bool hasPing;
     [SerializeField] private float pingTime;
 
+    //SOUND!
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
     //Properties
     public int Health
     {
@@ -86,6 +89,11 @@ public class Player : MonoBehaviour
         if (keycount > 2)
         {
             win = true;
+        }
+
+        if(move)
+        {
+            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
         }
     }
 
