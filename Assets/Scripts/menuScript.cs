@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class menuScript : MonoBehaviour
 {
@@ -112,6 +113,7 @@ public class menuScript : MonoBehaviour
 
     public void OptionsPressed()
     {
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("Button"));
         GetComponent<Canvas>().enabled = false;
 
         exitMenu.enabled = false;
@@ -133,6 +135,7 @@ public class menuScript : MonoBehaviour
     public void ApplyPressed()
     {
         GetComponent<Canvas>().enabled = true;
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("Play"));
         exitMenu.enabled = false;
         optionsMenu.enabled = false;
         start.enabled = true;
@@ -152,6 +155,7 @@ public class menuScript : MonoBehaviour
     public void OnCredits()
     {
         GetComponent<Canvas>().enabled = false;
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("BACK"));
         exitMenu.enabled = false;
         optionsMenu.enabled = false;
         start.enabled = false;
