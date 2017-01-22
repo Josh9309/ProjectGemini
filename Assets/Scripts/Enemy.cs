@@ -94,8 +94,8 @@ public class Enemy : MonoBehaviour
         //Debug.Log(angle);
 
         //Debug.DrawLine(transform.position, transform.position + transform.forward.normalized * 1.5f);
-        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward * 5);
-        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward * 5);
+        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(visionAngle, transform.up) * transform.forward * 20);
+        Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(-visionAngle, transform.up) * transform.forward * 20);
 
         if (angle > visionAngle)
         {
@@ -169,6 +169,8 @@ public class Enemy : MonoBehaviour
             {
                 if (coll.gameObject == patrolRoute[i])
                 {
+                    //agent.Stop();
+
                     visitedWaypoints[i] = true;
 
                     if (i != patrolRoute.Count - 1)
@@ -187,6 +189,8 @@ public class Enemy : MonoBehaviour
             {
                 if (coll.gameObject == patrolRoute[i])
                 {
+                    //agent.Stop();
+
                     visitedWaypoints[i] = true;
 
                     if (i != 0)
