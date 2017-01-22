@@ -29,7 +29,9 @@ public class Player : MonoBehaviour
 
     //SOUND!
     public AudioClip moveSound1;
-    public AudioClip moveSound2;
+  
+    public AudioClip ping1;
+  
     //Properties
     public int Health
     {
@@ -94,8 +96,9 @@ public class Player : MonoBehaviour
 
         if(move)
         {
-            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+            SoundManager.instance.RandomizeSfx(moveSound1);
         }
+        
     }
 
     public void incrimentKeyCounter()
@@ -116,8 +119,12 @@ public class Player : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1") == true && HasPing)
         {
+
+          
             pingObj.GetComponent<Animator>().Play("Pinging");
+            SoundManager.instance.RandomizePingSfx(ping1);
             StartCoroutine(PingCooldown());
+         
         }
 
 

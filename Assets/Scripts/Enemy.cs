@@ -111,12 +111,12 @@ public class Enemy : MonoBehaviour
 
             if (hit.transform.gameObject == target)
             {
-                SoundManager.instance.RandomizeEnemySfx(enemyMove1);
+                
                 return true;
             }
             else
             {
-                SoundManager.instance.RandomizeEnemySfx(enemyMove2);
+                
                 return false;
             }
         }
@@ -347,7 +347,7 @@ public class Enemy : MonoBehaviour
         if (patrol)
         {
             Patrol();
-
+       
             if (VisionCone() || detectionSphere.PlayerDetected)
             {
                //alert = true;
@@ -361,6 +361,7 @@ public class Enemy : MonoBehaviour
 
         if (pursuit)
         {
+            SoundManager.instance.RandomizeEnemySfx(enemyMove1);
             Pursue();
             Debug.Log(pursuit);
         }

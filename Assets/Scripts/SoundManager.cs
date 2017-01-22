@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour {
     public AudioSource efxSource;
     public AudioSource enemySource;
     public AudioSource musicSource;
+    public AudioSource pingSource;
     public static SoundManager instance = null;
     public float lowPitchRange = .95f;
     public float highPitchRange = 1.05f;
@@ -30,9 +31,11 @@ public class SoundManager : MonoBehaviour {
     {
         efxSource.clip = clip;
         enemySource.clip = clip;
+        pingSource.clip = clip;
 
         efxSource.Play();
         enemySource.Play();
+        pingSource.Play();
     }
 
     public void RandomizeSfx(params AudioClip[] clips)
@@ -62,6 +65,15 @@ public class SoundManager : MonoBehaviour {
         int randomIndex = Random.Range(0, clips.Length);
         enemySource.clip = clips[randomIndex];
         enemySource.Play();
+    }
+
+    public void RandomizePingSfx(params AudioClip[] clips)
+    {
+        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+        pingSource.pitch = randomPitch;
+        int randomIndex = Random.Range(0, clips.Length);
+        pingSource.clip = clips[randomIndex];
+        pingSource.Play();
     }
     // Use this for initialization
     void Start () {
