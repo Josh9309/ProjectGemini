@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private bool refillPing;
     [SerializeField] private float pingCooldownTime;
     [SerializeField] private float pingTime;
+    public GameObject endZone;
 
     //SOUND!
     public AudioClip moveSound1;
@@ -262,6 +263,16 @@ public class Player : MonoBehaviour
         {
             Debug.Log("player has died!");
             Destroy(gameObject);
+        }
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        //check you are at the endzone and have gotten all keys
+        if(col.gameObject == endZone && keycount >= 3)
+        {
+            //win state
+
         }
     }
 }
