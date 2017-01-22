@@ -117,16 +117,16 @@ public class HUDScript : MonoBehaviour
         }
         else if (playerScript.RefillPing)
         {
-            frontCircle.fillAmount += Time.deltaTime / 2f;
+            frontCircle.fillAmount += Time.deltaTime;
         }
 
-        if (enemiesInPursuit == null && enemiesInPursuit.Count > 0)
+        if (enemiesInPursuit != null && enemiesInPursuit.Count > 0)
         {
-            foreach (Enemy e in enemiesInPursuit)
+            for (int i = 0; i < enemiesInPursuit.Count; i++)
             {
-                if (!e.Pursuit)
+                if (!enemiesInPursuit[i].Pursuit)
                 {
-                    enemiesInPursuit.Remove(e);
+                    enemiesInPursuit.Remove(enemiesInPursuit[i]);
                 }
                 else
                 {
