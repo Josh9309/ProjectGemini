@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
     private int health = 1;
+    private int noise = 0;
+    private bool crouch;
+    private bool move;
+    private SphereCollider crouchCollider;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
     private bool hasPinged;
@@ -47,16 +51,24 @@ public class Player : MonoBehaviour
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
-
         hasPinged = false;
+        crouchCollider = GetComponent<SphereCollider>(); //assign to the capsule coliders center
+        crouch = false; //set inital value
+        move = false;
     }
 
     void Update() //Update is called once per frame
     {
+        //update crouch and movement bools
+        crouch = Input.GetKey(KeyCode.C);
+        move = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
+
         //Move();
         Ping();
         Interact();
         Die();
+
+        ScaleColliderToNoise();
 
         if (keycount > 2)
         {
@@ -128,6 +140,50 @@ public class Player : MonoBehaviour
         {
             pingObj.GetComponent<Animator>().Play("Pinging");
             hasPinged = true;
+        }
+
+
+    }
+
+    void ScaleColliderToNoise()
+    {
+        //make noise 100 if not crouched
+        if(!crouch)
+        {
+            noise = 0;
+            crouchCollider.enabled = false; //turn off sphere collider
+            crouchCollider.radius = 0.4f;
+            return; //leave method
+        }
+        else
+        {
+            crouchCollider.enabled = true; //turn on sphere collider
+        }
+
+        //up noise whilst moving- pos has changed
+        if(move)
+        {
+            //shhh! youre being loud
+            noise += 2; //up noise
+            crouchCollider.radius += 0.001f; //grow collider
+        }
+        else
+        {
+            //dont move, it can only see motion
+            noise -= 20;
+            crouchCollider.radius -= 0.003f; //shrink collider
+        }
+
+        //check minmax noise
+        if(noise < 0)
+        {
+            noise = 0;
+            crouchCollider.radius = 0.25f;
+        }
+        else if(noise > 425)
+        {
+            noise = 425;
+            crouchCollider.radius = .48f;
         }
     }
 

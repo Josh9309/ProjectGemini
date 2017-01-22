@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
 
     [SerializeField]
     private GameObject target;
@@ -13,12 +14,23 @@ public class Enemy : MonoBehaviour {
     private DetectionSphere detectionSphere;
     [SerializeField]
     private List<GameObject> patrolRoute;
+    [SerializeField]
+    private GameObject alertPoint;
     private List<bool> visitedWaypoints;
     private GameObject currentWaypoint;
     private bool reverse;
+    private bool patrol;
+    private bool pursuit;
+    private bool alert;
+    private bool scanning = true;
+    private bool alertScan = false;
+    private bool finished = false;
+    private bool running = false;
+    private Vector3 lastKnownLoc = Vector3.zero;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         agent = GetComponent<NavMeshAgent>();
         detectionSphere = GetComponentInChildren<DetectionSphere>();
         Debug.Log(patrolRoute.Count);
@@ -29,12 +41,14 @@ public class Enemy : MonoBehaviour {
 
         reverse = false;
 
+        patrol = true;
+
         // assign a default value of false for each waypoint in the patrol route
         for (int i = 0; i < patrolRoute.Count; i++)
         {
             visitedWaypoints.Add(false);
         }
-	}
+    }
 
     /// <summary>
     /// responsible for seeking the enemy's target.
@@ -163,6 +177,12 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
+
+        if (coll.transform.tag == "AlertPoint" && alert == true)
+        {
+            alertScan = true;
+            Destroy(coll.gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision coll)
@@ -174,15 +194,171 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-		if (VisionCone() || detectionSphere.PlayerDetected)
+    /// <summary>
+    /// responsible for finding and pursuing player
+    /// </summary>
+    private void Pursue()
+    {
+        if (finished == false)
         {
-            agent.destination = target.transform.position;
+            agent.destination = GameObject.FindGameObjectWithTag("Player").transform.position;
+            if (running == false)
+            {
+                StartCoroutine(Chase(5));
+            }
         }
-        else
+
+        if (finished == true)
+        {
+            finished = false;
+            pursuit = false;
+            patrol = true;
+        }
+    }
+
+    internal IEnumerator Chase(float duration)
+    {
+        running = true;
+        //for (float t = 0f; t < 1f; t += Time.deltaTime / duration)
+        //{
+        //    agent.destination = GameObject.FindGameObjectWithTag("Player").transform.position;
+        //
+        //    if (t >= .5f)
+        //    {
+        //        finished = true;
+        //    }
+        //
+        //    yield return null;
+        //}
+
+        yield return new WaitForSeconds(duration);
+        finished = true;
+        running = false;
+    }
+
+    /// <summary>
+    /// if player is spotted on patrol enemies will go to last
+    /// known location and look for player, if they detect them,
+    /// then pursuit will begin
+    /// </summary>
+    /// <param name="location"></param>
+    //private void Alert(Vector3 location)
+    //{
+    //    agent.destination = location;
+    //
+    //    if (alertScan)
+    //    {
+    //        agent.Stop();
+    //        //Debug.Log("Destination reached");
+    //        if (scanning == true)
+    //        {
+    //            StartCoroutine(Rotate(Vector3.up * 20, 2));
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Stop Scanning");
+    //            alertScan = false;
+    //            alertScan = false;
+    //            alert = false;
+    //            patrol = true;
+    //            scanning = true;
+    //        }
+    //    }
+    //}
+
+    /// <summary>
+    /// will rotate a given object by angles passed in in amount of time
+    /// while also checking if the enemy can see the player
+    /// </summary>
+    /// <param name="byAngles"></param>
+    /// <param name="inTime"></param>
+    /// <returns></returns>
+    internal IEnumerator Rotate(Vector3 byAngles, float inTime)
+    {
+        while (scanning)
+        {
+            if (scanning == false)
+            {
+                yield break;
+            }
+
+            //scanning = true;
+
+            Quaternion fromAngle = transform.rotation;
+            Quaternion toAngle = Quaternion.Euler(transform.eulerAngles + byAngles);
+
+            for (float t = 0f; t < 1f; t += Time.deltaTime / inTime)
+            {
+                transform.rotation = Quaternion.Slerp(fromAngle, toAngle, t);
+
+                //if (VisionCone())
+                //{
+                //    pursuit = true;
+                //    scanning = false;
+                //    yield break;
+                //}
+
+                yield return null;
+            }
+
+            toAngle = Quaternion.Euler(transform.eulerAngles - (2 * byAngles));
+            fromAngle = transform.rotation;
+
+            for (float t = 0f; t < 1f; t += Time.deltaTime / inTime)
+            {
+                transform.rotation = Quaternion.Slerp(fromAngle, toAngle, t);
+
+                //if (VisionCone())
+                //{
+                //    pursuit = true;
+                //    scanning = false;
+                //    yield break;
+                //}
+
+                if (t >= .9f)
+                {
+                    scanning = false;
+                }
+
+                yield return null;
+            }
+        }
+        //scanning = false;
+
+        //if (scanning == false)
+        //{
+        //    yield break;
+        //}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (patrol)
         {
             Patrol();
+
+            if (VisionCone() || detectionSphere.PlayerDetected)
+            {
+                //alert = true;
+                pursuit = true;
+                patrol = false;
+                //lastKnownLoc = GameObject.FindGameObjectWithTag("Player").transform.position;
+
+                //GameObject.Instantiate(alertPoint, lastKnownLoc, Quaternion.identity);
+            }
         }
-	}
+
+        //if (alert)
+        //{
+        //    Alert(lastKnownLoc);
+        //}
+
+        if (pursuit)
+        {
+            Pursue();
+        }
+        
+    }
 }
