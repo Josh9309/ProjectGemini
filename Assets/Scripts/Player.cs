@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
@@ -265,6 +266,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("player has died!");
             Destroy(gameObject);
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("BootToMain"));
         }
     }
 
