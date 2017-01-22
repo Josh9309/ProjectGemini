@@ -22,7 +22,7 @@ public class ColorMenu : MonoBehaviour
         //enemyTextureRenderer = m_Enemy.GetComponent<Renderer>(); //Get the enemy's texture renderer
 
         playerTextureRenderer.material.color = Color.black;
-        //enemyTextureRenderer.material.color = Color.black;
+        enemyUITextureRenderer.material.color = Color.black;
 
         UnityEngine.UI.Image[] allUIImages = FindObjectsOfType<UnityEngine.UI.Image>();
         int numColorBoxes = 0;
@@ -72,6 +72,14 @@ public class ColorMenu : MonoBehaviour
     {
         if (!shouldPingPong)
         {
+            colorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(10, 10);
+            currentColorBox = colorBox; //Set the currently selected color
+
+            shouldPingPong = true;
+        }
+        else if (currentColorBox != colorBox)
+        {
+            currentColorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(2, 2);
             colorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(10, 10);
             currentColorBox = colorBox; //Set the currently selected color
 
