@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private Rigidbody playerRB;
     public int keycount;
     public bool win = false;
+    public Material pingMat;
     //[SerializeField] private float playerRotationSpeed;
     //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;

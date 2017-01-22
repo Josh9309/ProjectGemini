@@ -5,20 +5,25 @@ using UnityEngine;
 public class fridge : MonoBehaviour {
     public Rigidbody rb;
     public HingeJoint hj;
+    public bool open = false;
 
     // Shows button press prompt on screen
     public void activate()
     {
-        //Debug.LogWarning(gameObject.name);
-        //Pushes the door
-        int direction = 1;
-        if (hj.anchor.z > 0)
-            direction = -1;
 
-        if (gameObject.transform.rotation.y > 0)
-            rb.AddForce(transform.right * (direction * -5000));
+        //Pushes the door
+        
+        if (open == true)
+        {
+            open = false;
+            rb.AddForce(transform.right * (-5000));
+        }
         else
-            rb.AddForce(transform.right * (direction * 5000));
+        {
+            open = true;
+            rb.AddForce(transform.right * (5000));
+        }
+            
 
     }
 
@@ -31,8 +36,8 @@ public class fridge : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         //Stops the door when in a completely open or closed state
-
-        if ((gameObject.transform.rotation.y <= 0 || gameObject.transform.rotation.y >= 0.75))
+        Debug.LogWarning(gameObject.transform.rotation.y);
+        if (gameObject.transform.rotation.y <= 0.7)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY;
             rb.constraints = RigidbodyConstraints.None;
