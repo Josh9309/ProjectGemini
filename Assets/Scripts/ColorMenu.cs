@@ -50,7 +50,7 @@ public class ColorMenu : MonoBehaviour
 
         for (int i = 0; i < allUIText.Length; i++) //For each UI image
         {
-            if (allUIText[i].name.Contains("Text"))
+            if (allUIText[i].name.Contains("Text")) 
             {
                 UIText[numText] = allUIText[i];
                 numText++;
