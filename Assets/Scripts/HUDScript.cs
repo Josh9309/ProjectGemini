@@ -115,6 +115,8 @@ public class HUDScript : MonoBehaviour
 
         playerScript = FindObjectOfType<Player>();
 
+        playerScript.pingMat.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100 / 255f);
+
         enemiesInPursuit = new List<Enemy>();
     }	
 	
