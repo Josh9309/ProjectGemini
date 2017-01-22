@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainMenuCamera : MonoBehaviour
 {
 
-    public GameObject obj;
+   // public GameObject obj;
 
     Vector3 vec;
 
@@ -20,7 +20,7 @@ public class MainMenuCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = obj.transform.position + vec;
+        transform.position = transform.position + vec;
         if(transform.position.z > 550)
         {
             transform.position = vec;

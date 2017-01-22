@@ -16,7 +16,7 @@ public class interact : MonoBehaviour {
         //Checks if object being looked at can be interacted with
         
         //Performes interaction on object
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetButtonDown("Interact"))
         {
             //calculates distance between player and object, only activates if distance is close enough
             GameObject player = GameObject.Find("Player");
