@@ -1,0 +1,378 @@
+fileFormatVersion: 2
+guid: 61d81f8b31dbf16428b43cbdfa27278f
+timeCreated: 1485059943
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ankle_L_ctrl
+    100002: ankle_R_ctrl
+    100004: body_control
+    100006: chest
+    100008: chest_control
+    100010: elbow_L_ctrl
+    100012: elbow_R_ctrl
+    100014: //RootNode
+    100016: enemy_guard_001
+    100018: enemy_rig
+    100020: head_joint
+    100022: joint18
+    100024: joint19
+    100026: joint2
+    100028: joint21
+    100030: joint22
+    100032: joint24
+    100034: joint25
+    100036: joint27
+    100038: joint28
+    100040: joint30
+    100042: joint31
+    100044: joint36
+    100046: joint37
+    100048: joint39
+    100050: joint40
+    100052: joint42
+    100054: joint43
+    100056: joint45
+    100058: joint46
+    100060: joint48
+    100062: joint49
+    100064: knee_L_ctrl
+    100066: knee_R_ctrl
+    100068: L_index
+    100070: L_middle
+    100072: L_pinky
+    100074: L_ring
+    100076: L_thumb
+    100078: left_ankle_joint
+    100080: left_elbow_joint
+    100082: left_foot_joint
+    100084: left_knee_joint
+    100086: left_leg_joint
+    100088: left_shoulder_joint
+    100090: left_wrist_joint
+    100092: leg_L_ctrl
+    100094: leg_R_ctrl
+    100096: neck_ctrl
+    100098: neck_joint
+    100100: R_index
+    100102: R_middle
+    100104: R_pinky
+    100106: R_ring
+    100108: R_thumb
+    100110: rifle_001
+    100112: right_ankle_joint
+    100114: right_elbow_joint
+    100116: right_foot_joint
+    100118: right_knee_joint
+    100120: right_leg_joint
+    100122: right_shoulder_joint
+    100124: right_wrist_joint
+    100126: shoulder_L_ctrl
+    100128: shoulder_R_ctrl
+    100130: wrist_L_ctrl
+    100132: wrist_R_ctrl
+    400000: ankle_L_ctrl
+    400002: ankle_R_ctrl
+    400004: body_control
+    400006: chest
+    400008: chest_control
+    400010: elbow_L_ctrl
+    400012: elbow_R_ctrl
+    400014: //RootNode
+    400016: enemy_guard_001
+    400018: enemy_rig
+    400020: head_joint
+    400022: joint18
+    400024: joint19
+    400026: joint2
+    400028: joint21
+    400030: joint22
+    400032: joint24
+    400034: joint25
+    400036: joint27
+    400038: joint28
+    400040: joint30
+    400042: joint31
+    400044: joint36
+    400046: joint37
+    400048: joint39
+    400050: joint40
+    400052: joint42
+    400054: joint43
+    400056: joint45
+    400058: joint46
+    400060: joint48
+    400062: joint49
+    400064: knee_L_ctrl
+    400066: knee_R_ctrl
+    400068: L_index
+    400070: L_middle
+    400072: L_pinky
+    400074: L_ring
+    400076: L_thumb
+    400078: left_ankle_joint
+    400080: left_elbow_joint
+    400082: left_foot_joint
+    400084: left_knee_joint
+    400086: left_leg_joint
+    400088: left_shoulder_joint
+    400090: left_wrist_joint
+    400092: leg_L_ctrl
+    400094: leg_R_ctrl
+    400096: neck_ctrl
+    400098: neck_joint
+    400100: R_index
+    400102: R_middle
+    400104: R_pinky
+    400106: R_ring
+    400108: R_thumb
+    400110: rifle_001
+    400112: right_ankle_joint
+    400114: right_elbow_joint
+    400116: right_foot_joint
+    400118: right_knee_joint
+    400120: right_leg_joint
+    400122: right_shoulder_joint
+    400124: right_wrist_joint
+    400126: shoulder_L_ctrl
+    400128: shoulder_R_ctrl
+    400130: wrist_L_ctrl
+    400132: wrist_R_ctrl
+    2300000: rifle_001
+    3300000: rifle_001
+    4300000: rifle_001
+    4300002: enemy_guard_001
+    7400000: walk
+    9500000: //RootNode
+    13700000: enemy_guard_001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: walk
+      takeName: walk
+      firstFrame: 1
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: body_control
+        weight: 1
+      - path: body_control/chest_control
+        weight: 1
+      - path: body_control/chest_control/neck_ctrl
+        weight: 1
+      - path: body_control/chest_control/shoulder_L_ctrl
+        weight: 1
+      - path: body_control/chest_control/shoulder_L_ctrl/elbow_L_ctrl
+        weight: 1
+      - path: body_control/chest_control/shoulder_L_ctrl/elbow_L_ctrl/wrist_L_ctrl
+        weight: 1
+      - path: body_control/chest_control/shoulder_L_ctrl/elbow_L_ctrl/wrist_L_ctrl/rifle_001
+        weight: 1
+      - path: body_control/chest_control/shoulder_R_ctrl
+        weight: 1
+      - path: body_control/chest_control/shoulder_R_ctrl/elbow_R_ctrl
+        weight: 1
+      - path: body_control/chest_control/shoulder_R_ctrl/elbow_R_ctrl/wrist_R_ctrl
+        weight: 1
+      - path: body_control/leg_L_ctrl
+        weight: 1
+      - path: body_control/leg_L_ctrl/knee_L_ctrl
+        weight: 1
+      - path: body_control/leg_L_ctrl/knee_L_ctrl/ankle_L_ctrl
+        weight: 1
+      - path: body_control/leg_R_ctrl
+        weight: 1
+      - path: body_control/leg_R_ctrl/knee_R_ctrl
+        weight: 1
+      - path: body_control/leg_R_ctrl/knee_R_ctrl/ankle_R_ctrl
+        weight: 1
+      - path: enemy_guard_001
+        weight: 1
+      - path: enemy_rig
+        weight: 1
+      - path: enemy_rig/joint2
+        weight: 1
+      - path: enemy_rig/joint2/chest
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_index
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_index/joint27
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_index/joint27/joint28
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_middle
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_middle/joint24
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_middle/joint24/joint25
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_pinky
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_pinky/joint18
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_pinky/joint18/joint19
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_ring
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_ring/joint21
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_ring/joint21/joint22
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_thumb
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_thumb/joint30
+        weight: 1
+      - path: enemy_rig/joint2/chest/left_shoulder_joint/left_elbow_joint/left_wrist_joint/L_thumb/joint30/joint31
+        weight: 1
+      - path: enemy_rig/joint2/chest/neck_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/neck_joint/head_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_index
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_index/joint39
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_index/joint39/joint40
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_middle
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_middle/joint42
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_middle/joint42/joint43
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_pinky
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_pinky/joint48
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_pinky/joint48/joint49
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_ring
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_ring/joint45
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_ring/joint45/joint46
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_thumb
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_thumb/joint36
+        weight: 1
+      - path: enemy_rig/joint2/chest/right_shoulder_joint/right_elbow_joint/right_wrist_joint/R_thumb/joint36/joint37
+        weight: 1
+      - path: enemy_rig/left_leg_joint
+        weight: 1
+      - path: enemy_rig/left_leg_joint/left_knee_joint
+        weight: 1
+      - path: enemy_rig/left_leg_joint/left_knee_joint/left_ankle_joint
+        weight: 1
+      - path: enemy_rig/left_leg_joint/left_knee_joint/left_ankle_joint/left_foot_joint
+        weight: 1
+      - path: enemy_rig/right_leg_joint
+        weight: 1
+      - path: enemy_rig/right_leg_joint/right_knee_joint
+        weight: 1
+      - path: enemy_rig/right_leg_joint/right_knee_joint/right_ankle_joint
+        weight: 1
+      - path: enemy_rig/right_leg_joint/right_knee_joint/right_ankle_joint/right_foot_joint
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
