@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
         else
         {
             //dont move, it can only see motion
-            noise -= 20;
+            noise -= 3;
             crouchCollider.radius -= 0.003f; //shrink collider
         }
 

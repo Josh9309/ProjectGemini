@@ -13,6 +13,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
+        //toggle crouch
+        private bool crouchToggle;
+
         
         private void Start()
         {
@@ -30,6 +33,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();
+
+            //set toggled crouch initally
+            crouchToggle = false;
         }
 
 
@@ -41,14 +47,30 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             }
         }
 
-
         // Fixed update is called in sync with physics
         private void FixedUpdate()
         {
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-            bool crouch = Input.GetKey(KeyCode.C);
+
+            //toggle crouch
+            if(Input.GetKeyUp(KeyCode.C))
+            {
+                if(crouchToggle)
+                {
+                    //true -> false
+                    crouchToggle = false;
+                }
+                else
+                {
+                    //false -> true
+                    crouchToggle = true;
+                }
+            }
+
+            //assign crouch
+            bool crouch = crouchToggle;
 
             // calculate move direction to pass to character
             if (m_Cam != null)
