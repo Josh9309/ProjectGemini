@@ -112,10 +112,10 @@ public class Player : MonoBehaviour
 
         ScaleColliderToNoise();
 
-        if (keycount > 2)
-        {
-            win = true;
-        }
+        //if (keycount > 2)
+        //{
+        //    win = true;
+        //}
 
         if(move)
         {
@@ -272,7 +272,7 @@ public class Player : MonoBehaviour
         if(col.gameObject == endZone && keycount >= 3)
         {
             //win state
-
+            win = true; //Moved from update
         }
     }
 }

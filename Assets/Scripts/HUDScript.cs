@@ -161,8 +161,6 @@ public class HUDScript : MonoBehaviour
     {
         if (playerScript.Health <= 0) //If the player is dead
         {
-            //Time.timeScale = 0; //Pause
-
             endgameBackground.color = new Color(1, 92f / 255f, 92f / 255f, 100f / 255f);
 
             if (endgameBackground.fillAmount < 1)
@@ -173,7 +171,27 @@ public class HUDScript : MonoBehaviour
             {
                 foreach (UnityEngine.UI.Text t in endgameText)
                 {
-                    t.text = "You have been captured!\nGame over";
+                    t.text = "You have been captured!\nGame over!";
+                }
+
+                endgameBox.enabled = true;
+
+                StartCoroutine(Timer());
+            }
+        }
+        else if (playerScript.win)
+        {
+            endgameBackground.color = new Color(1, 1, 1, 100f / 255f);
+
+            if (endgameBackground.fillAmount < 1)
+            {
+                endgameBackground.fillAmount += Time.deltaTime;
+            }
+            else
+            {
+                foreach (UnityEngine.UI.Text t in endgameText)
+                {
+                    t.text = "You have escaped!\nYou win!";
                 }
 
                 endgameBox.enabled = true;
