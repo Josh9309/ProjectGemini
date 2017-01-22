@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     private SphereCollider crouchCollider;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
-    private bool hasPinged;
+    //private bool hasPinged;
 
     //Properties
     public int Health
@@ -35,15 +35,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool HasPinged
+    //public bool HasPinged
+    //{
+    //    get
+    //    {
+    //        return hasPinged;
+    //    }
+    //    set
+    //    {
+    //        hasPinged = value;
+    //    }
+    //}
+
+    public GameObject PingObj
     {
         get
         {
-            return hasPinged;
+            return pingObj;
         }
         set
         {
-            hasPinged = value;
+            pingObj = value;
         }
     }
 
@@ -51,7 +63,7 @@ public class Player : MonoBehaviour
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
-        hasPinged = false;
+        //hasPinged = false;
         crouchCollider = GetComponent<SphereCollider>(); //assign to the capsule coliders center
         crouch = false; //set inital value
         move = false;
@@ -139,7 +151,7 @@ public class Player : MonoBehaviour
         if(Input.GetButtonDown("Fire1") == true)
         {
             pingObj.GetComponent<Animator>().Play("Pinging");
-            hasPinged = true;
+            //hasPinged = true;
         }
 
 
