@@ -369,7 +369,7 @@ public class Enemy : MonoBehaviour
         {
           
             Pursue();
-            Debug.Log(pursuit);
+            //Debug.Log(pursuit);
         }
 
         //if (alert)
