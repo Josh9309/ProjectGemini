@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
     private bool hasPing;
+    private bool refillPing;
     [SerializeField] private float pingCooldownTime;
     [SerializeField] private float pingTime;
 
@@ -62,6 +63,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool RefillPing
+    {
+        get
+        {
+            return refillPing;
+        }
+        set
+        {
+            refillPing = value;
+        }
+    }
+
     public GameObject PingObj
     {
         get
@@ -79,6 +92,7 @@ public class Player : MonoBehaviour
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
         hasPing = true;
+        refillPing = false;
         crouchCollider = GetComponent<SphereCollider>(); //assign to the capsule coliders center
         crouch = false; //set inital value
         move = false;
@@ -118,7 +132,14 @@ public class Player : MonoBehaviour
     {
         hasPing = false;
 
-        yield return new WaitForSeconds(pingCooldownTime);
+        yield return new WaitForSeconds(pingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        refillPing = true;
+        Debug.Log(pingCooldownTime - pingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        yield return new WaitForSeconds(pingCooldownTime - pingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        refillPing = false;
 
         hasPing = true;
     }

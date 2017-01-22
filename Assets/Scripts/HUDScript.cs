@@ -77,13 +77,13 @@ public class HUDScript : MonoBehaviour
 
     void PingUI() //Manage ping cooldown and enemy alert
     {
-        if (frontCircle.fillAmount > 0 && playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length)
+        if (frontCircle.fillAmount > 0 && !playerScript.RefillPing && !playerScript.HasPing)
         {
             frontCircle.fillAmount -= Time.deltaTime;
         }
-        else if (!(playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length))
+        else if (playerScript.RefillPing)
         {
-            frontCircle.fillAmount += Time.deltaTime / 1.5f;
+            frontCircle.fillAmount += Time.deltaTime / 2f;
         }
 
         if (enemiesInPursuit == null && enemiesInPursuit.Count > 0)
