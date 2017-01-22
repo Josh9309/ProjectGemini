@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     //Attributes
     private GameObject pingObj;
     private Rigidbody playerRB;
+    public int keycount;
+    public bool win = false;
     //[SerializeField] private float playerRotationSpeed;
     //[SerializeField] private float playerMoveSpeed;
     private Vector3 movement = Vector3.zero;
@@ -18,10 +20,11 @@ public class Player : MonoBehaviour
     private int noise = 0;
     private bool crouch;
     private bool move;
-    private Transform lastPos;
-    private Vector3 colliderScale;
+    private SphereCollider crouchCollider;
     [SerializeField] private Material white;
     [SerializeField] private Material highlightColor;
+    private int pingAmount = 100;
+
     //Properties
     public int Health
     {
@@ -32,11 +35,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int PingAmount
+    {
+        get
+        {
+            return pingAmount;
+        }
+        set
+        {
+            pingAmount = value;
+        }
+    }
+
     void Start() //Use this for initialization
     {
         pingObj = GameObject.Find("Ping");
         playerRB = GetComponent<Rigidbody>(); //Get the player's rigidbody
-        colliderScale = GetComponent<CapsuleCollider>().center; //assign to the capsule coliders center
+        crouchCollider = GetComponent<SphereCollider>(); //assign to the capsule coliders center
         crouch = false; //set inital value
         move = false;
     }
@@ -51,11 +66,18 @@ public class Player : MonoBehaviour
         Ping();
         Interact();
         Die();
+
         ScaleColliderToNoise();
 
-        //update lastPos
-        lastPos = gameObject.transform;
+        if (keycount > 2)
+        {
+            win = true;
+        }
+    }
 
+    public void incrimentKeyCounter()
+    {
+        keycount++;
     }
 
     //void Move() //Player movement
@@ -126,32 +148,40 @@ public class Player : MonoBehaviour
         //make noise 100 if not crouched
         if(!crouch)
         {
-            noise = 1000;
+            noise = 0;
+            crouchCollider.enabled = false; //turn off sphere collider
+            crouchCollider.radius = 0.4f;
             return; //leave method
+        }
+        else
+        {
+            crouchCollider.enabled = true; //turn on sphere collider
         }
 
         //up noise whilst moving- pos has changed
-        if(!move)
+        if(move)
         {
             //shhh! youre being loud
             noise += 2; //up noise
-            colliderScale += new Vector3(0.1f, 0.1f, 0.1f); //grow collider
+            crouchCollider.radius += 0.001f; //grow collider
         }
         else
         {
             //dont move, it can only see motion
-            noise -= 1;
-            colliderScale -= new Vector3(0.1f, 0.1f, 0.1f); //shrink collider
+            noise -= 20;
+            crouchCollider.radius -= 0.003f; //shrink collider
         }
 
         //check minmax noise
         if(noise < 0)
         {
             noise = 0;
+            crouchCollider.radius = 0.25f;
         }
-        else if(noise > 1000)
+        else if(noise > 425)
         {
-            noise = 1000;
+            noise = 425;
+            crouchCollider.radius = .48f;
         }
     }
 

@@ -9,6 +9,7 @@ public class menuScript : MonoBehaviour
     
     public Canvas exitMenu;
     public Canvas optionsMenu;
+    public Canvas creditsMenu;
     //play
     public Button start;
     public Button exit;
@@ -20,12 +21,14 @@ public class menuScript : MonoBehaviour
     public Toggle fullscreen;
     public Dropdown resolution;
     public Slider audio;
+    public Button back;
 	// Use this for initialization
 	void Start ()
     {
         //instantiate values
         exitMenu = exitMenu.GetComponent<Canvas>();
         optionsMenu = optionsMenu.GetComponent<Canvas>();
+        creditsMenu = creditsMenu.GetComponent<Canvas>();
         start = start.GetComponent<Button>();
         exit = exit.GetComponent<Button>();
         options = options.GetComponent<Button>();
@@ -36,7 +39,9 @@ public class menuScript : MonoBehaviour
         fullscreen = fullscreen.GetComponent<Toggle>();
         resolution = resolution.GetComponent<Dropdown>();
         audio = audio.GetComponent<Slider>();
+        back = back.GetComponent<Button>();
 
+        creditsMenu.enabled =  false;
         exitMenu.enabled = false;
         optionsMenu.enabled = false;
         no.enabled = false;
@@ -47,6 +52,7 @@ public class menuScript : MonoBehaviour
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
+        back.enabled = false;
     }
 
     //exit button
@@ -67,6 +73,8 @@ public class menuScript : MonoBehaviour
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
+        back.enabled = false;
+        creditsMenu.enabled = false;
     }
 
     //No
@@ -86,6 +94,8 @@ public class menuScript : MonoBehaviour
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
+        creditsMenu.enabled = false;
+        back.enabled = false;
     }
 
     //Start game
@@ -116,6 +126,8 @@ public class menuScript : MonoBehaviour
         fullscreen.enabled = true;
         audio.enabled = true;
         apply.enabled = true;
+        back.enabled = false;
+        creditsMenu.enabled = false;
     }
 
     public void ApplyPressed()
@@ -127,12 +139,52 @@ public class menuScript : MonoBehaviour
         exit.enabled = true;
         options.enabled = true;
         credits.enabled = true;
-       
+        back.enabled = false;
+        creditsMenu.enabled = false;
         no.enabled = false;
         yes.enabled = false;
         fullscreen.enabled = false;
         resolution.enabled = false;
         audio.enabled = false;
+    }
+
+
+    public void OnCredits()
+    {
+        GetComponent<Canvas>().enabled = false;
+        exitMenu.enabled = false;
+        optionsMenu.enabled = false;
+        start.enabled = false;
+        exit.enabled = false;
+        options.enabled = true;
+        credits.enabled = true;
+        back.enabled = true;
+        creditsMenu.enabled = true;
+        no.enabled = false;
+        yes.enabled = false;
+        fullscreen.enabled = false;
+        resolution.enabled = false;
+        audio.enabled = false;
+    }
+    
+    public void OnBack()
+    {
+        //dissable quit menu
+        //enable start menu
+        GetComponent<Canvas>().enabled = true;
+        exitMenu.enabled = false;
+        optionsMenu.enabled = false;
+        start.enabled = true;
+        exit.enabled = true;
+        options.enabled = true;
+        credits.enabled = true;
+        no.enabled = false;
+        yes.enabled = false;
+        creditsMenu.enabled = false;
+        fullscreen.enabled = false;
+        resolution.enabled = false;
+        audio.enabled = false;
+        
     }
 
 }

@@ -50,7 +50,10 @@ public class ColorMenu : MonoBehaviour
 
         shouldPingPong = false;
         ping = false;
-	}
+
+        GameManager.playerColor = Color.black;
+        GameManager.enemyColor = Color.black;
+    }
 	
 	void Update() //Update is called once per frame
     {

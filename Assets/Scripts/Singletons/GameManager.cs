@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     #region Fields
     //Assigned in inspector
     public List<GameObject> players = new List<GameObject>();
-    static public Color playerColor;
+    static public Color playerColor = Color.red;
     static public Color enemyColor;
     #endregion
 
