@@ -59,14 +59,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			ApplyExtraTurnRotation();
 
 			// control and velocity handling is different when grounded and airborne:
-			if (m_IsGrounded)
-			{
-				HandleGroundedMovement(crouch, jump);
-			}
-			else
-			{
-				HandleAirborneMovement();
-			}
+			//if (m_IsGrounded)
+			//{
+				//HandleGroundedMovement(crouch, jump);
+			//}
+			//else
+			//{
+			//	HandleAirborneMovement();
+			//}
 
 			ScaleCapsuleForCrouching(crouch);
 			PreventStandingInLowHeadroom();
@@ -133,11 +133,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			float runCycle =
 				Mathf.Repeat(
 					m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
-			float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
-			if (m_IsGrounded)
-			{
-				m_Animator.SetFloat("JumpLeg", jumpLeg);
-			}
+			//float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
+			//if (m_IsGrounded)
+			//{
+			//	m_Animator.SetFloat("JumpLeg", jumpLeg);
+			//}
 
 			// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 			// which affects the movement speed because of the root motion.
@@ -153,28 +153,28 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		void HandleAirborneMovement()
-		{
-			// apply extra gravity from multiplier:
-			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-			m_Rigidbody.AddForce(extraGravityForce);
+		//void HandleAirborneMovement()
+		//{
+		//	// apply extra gravity from multiplier:
+		//	Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
+		//	m_Rigidbody.AddForce(extraGravityForce);
+        //
+		//	m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+		//}
 
-			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
-		}
 
-
-		void HandleGroundedMovement(bool crouch, bool jump)
-		{
-			// check whether conditions are right to allow a jump:
-			if (jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
-			{
-				// jump!
-				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
-				m_IsGrounded = false;
-				m_Animator.applyRootMotion = false;
-				m_GroundCheckDistance = 0.1f;
-			}
-		}
+		//void HandleGroundedMovement(bool crouch, bool jump)
+		//{
+		//	// check whether conditions are right to allow a jump:
+		//	if (jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
+		//	{
+		//		// jump!
+		//		m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
+		//		m_IsGrounded = false;
+		//		m_Animator.applyRootMotion = false;
+		//		m_GroundCheckDistance = 0.1f;
+		//	}
+		//}
 
 		void ApplyExtraTurnRotation()
 		{

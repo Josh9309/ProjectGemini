@@ -8,15 +8,13 @@ public class interact : MonoBehaviour {
 	void Start ()
     {
 
-	}
+    }
     //Detects when object is clicked with the mouse (should have range limit)
-    void OnMouseOver()
+    public void Update()
     {
+        //Debug.LogWarning("test");
         //Checks if object being looked at can be interacted with
-        if (gameObject.tag == "")
-            //change color of object if interactable?
-            return;
-
+        
         //Performes interaction on object
         if (Input.GetMouseButtonDown(0))
         {
@@ -27,7 +25,7 @@ public class interact : MonoBehaviour {
 
             float distance = Mathf.Sqrt(Mathf.Pow(coords2.x - coords1.x, 2) + Mathf.Pow(coords2.z - coords1.z, 2));
 
-            if (distance < 10){
+            if (distance < 20){
                 switch (gameObject.tag)
                 {
                     case "door":
@@ -51,8 +49,4 @@ public class interact : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-
-    }
 }

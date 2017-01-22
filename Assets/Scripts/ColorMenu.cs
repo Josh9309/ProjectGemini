@@ -22,7 +22,7 @@ public class ColorMenu : MonoBehaviour
         //enemyTextureRenderer = m_Enemy.GetComponent<Renderer>(); //Get the enemy's texture renderer
 
         playerTextureRenderer.material.color = Color.black;
-        //enemyTextureRenderer.material.color = Color.black;
+        enemyUITextureRenderer.material.color = Color.black;
 
         UnityEngine.UI.Image[] allUIImages = FindObjectsOfType<UnityEngine.UI.Image>();
         int numColorBoxes = 0;
@@ -41,7 +41,7 @@ public class ColorMenu : MonoBehaviour
 
         for (int i = 0; i < allUIText.Length; i++) //For each UI image
         {
-            if (allUIText[i].name.Contains("Text"))
+            if (allUIText[i].name.Contains("Text")) 
             {
                 UIText[numText] = allUIText[i];
                 numText++;
@@ -50,7 +50,10 @@ public class ColorMenu : MonoBehaviour
 
         shouldPingPong = false;
         ping = false;
-	}
+
+        GameManager.playerColor = Color.black;
+        GameManager.enemyColor = Color.black;
+    }
 	
 	void Update() //Update is called once per frame
     {
@@ -69,6 +72,14 @@ public class ColorMenu : MonoBehaviour
     {
         if (!shouldPingPong)
         {
+            colorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(10, 10);
+            currentColorBox = colorBox; //Set the currently selected color
+
+            shouldPingPong = true;
+        }
+        else if (currentColorBox != colorBox)
+        {
+            currentColorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(2, 2);
             colorBox.GetComponent<UnityEngine.UI.Outline>().effectDistance = new Vector2(10, 10);
             currentColorBox = colorBox; //Set the currently selected color
 
@@ -100,7 +111,7 @@ public class ColorMenu : MonoBehaviour
 
     public void SceneChange(string sceneName)
     {
-        if (sceneName == "GameScene")
+        if (sceneName == "greybox")
         {
             GameManager.playerColor = playerTextureRenderer.material.color;
             GameManager.enemyColor = enemyUITextureRenderer.material.color;

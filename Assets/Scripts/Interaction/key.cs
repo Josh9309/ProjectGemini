@@ -11,8 +11,8 @@ public class key : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 
     public void activate(GameObject pl)
     {
