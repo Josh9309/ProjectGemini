@@ -29,6 +29,7 @@ public class HUDScript : MonoBehaviour
 	
 	void Update() //Update is called once per frame
     {
+        if (playerScript.HasPinged)
         PingUI();	
 	}
 

@@ -111,7 +111,7 @@ public class ColorMenu : MonoBehaviour
 
     public void SceneChange(string sceneName)
     {
-        if (sceneName == "GameScene")
+        if (sceneName == "greybox")
         {
             GameManager.playerColor = playerTextureRenderer.material.color;
             GameManager.enemyColor = enemyUITextureRenderer.material.color;
