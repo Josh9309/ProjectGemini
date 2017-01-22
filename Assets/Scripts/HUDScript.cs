@@ -8,8 +8,9 @@ public class HUDScript : MonoBehaviour
     private UnityEngine.UI.Image backCircle;
     private UnityEngine.UI.Text countdown;
     private Player playerScript;
-    private List<GameObject> enemies;
-    private List<GameObject> keys;
+    private List<Enemy> enemies;
+    private List<key> keys;
+    private List<Enemy> enemiesInPursuit;
 
     void Start() //Use this for initialization
     {
@@ -34,24 +35,20 @@ public class HUDScript : MonoBehaviour
         countdown = FindObjectOfType<UnityEngine.UI.Text>();
 
         GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
-        enemies = new List<GameObject>();
-        keys = new List<GameObject>();
-        int numEnemies = 0;
-        int numKeys = 0;
+        enemies = new List<Enemy>();
+        keys = new List<key>();
 
         for (int i = 0; i < allGameObjects.Length; i++)
         {
             if (allGameObjects[i].tag == "Enemy")
             {
-                enemies.Add(allGameObjects[i]);
-                enemies[numEnemies].GetComponent<Renderer>().material.color = GameManager.enemyColor;
-                numEnemies++;
+                enemies.Add(allGameObjects[i].GetComponent<Enemy>());
+                allGameObjects[i].GetComponent<Renderer>().material.color = GameManager.enemyColor;
             }
             else if (allGameObjects[i].tag == "key")
             {
-                keys.Add(allGameObjects[i]);
-                keys[numKeys].GetComponent<Renderer>().material.color = GameManager.playerColor;
-                numKeys++;
+                keys.Add(allGameObjects[i].GetComponent<key>());
+                allGameObjects[i].GetComponent<Renderer>().material.color = GameManager.playerColor;
             }
             else if (allGameObjects[i].tag == "Player")
             {
@@ -60,15 +57,17 @@ public class HUDScript : MonoBehaviour
             }
         }
 
-        playerScript = FindObjectOfType<Player>();;
+        playerScript = FindObjectOfType<Player>();
+
+        enemiesInPursuit = new List<Enemy>();
     }	
 	
 	void Update() //Update is called once per frame
     {
-        PingUI();	
+        PingUI();
 	}
 
-    void PingUI()
+    void PingUI() //Manage ping cooldown and enemy alert
     {
         if (frontCircle.fillAmount > 0 && playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < playerScript.PingObj.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length)
         {
@@ -79,6 +78,35 @@ public class HUDScript : MonoBehaviour
             frontCircle.fillAmount += Time.deltaTime / 1.5f;
         }
 
-        countdown.text = ((int)(frontCircle.fillAmount * 100)).ToString();
+        if (enemiesInPursuit.Count > 0)
+        {
+            foreach (Enemy e in enemiesInPursuit)
+            {
+                if (!e.Pursuit)
+                {
+                    enemiesInPursuit.Remove(e);
+                }
+                else
+                {
+                    countdown.text = "!";
+                    backCircle.color = Color.Lerp(GameManager.playerColor, Color.red, Mathf.PingPong(Time.time, 1));
+                }
+            }
+        }
+        else
+        {
+            foreach (Enemy e in enemies)
+            {
+                if (!e.Pursuit)
+                {
+                    countdown.text = ((int)(frontCircle.fillAmount * 100)).ToString();
+                    backCircle.color = GameManager.playerColor;
+                }
+                else
+                {
+                    enemiesInPursuit.Add(e);
+                }
+            }
+        }
     }
 }

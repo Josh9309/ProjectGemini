@@ -28,6 +28,22 @@ public class Enemy : MonoBehaviour
     private bool running = false;
     private Vector3 lastKnownLoc = Vector3.zero;
 
+    //public bool Alert
+    //{
+    //    get
+    //    {
+    //        return alert;
+    //    }
+    //}
+
+    public bool Pursuit
+    {
+        get
+        {
+            return pursuit;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -325,7 +341,7 @@ public class Enemy : MonoBehaviour
 
             if (VisionCone() || detectionSphere.PlayerDetected)
             {
-               // alert = true;
+               //alert = true;
                 pursuit = true;
                 patrol = false;
                 //lastKnownLoc = GameObject.FindGameObjectWithTag("Player").transform.position;
@@ -337,6 +353,7 @@ public class Enemy : MonoBehaviour
         if (pursuit)
         {
             Pursue();
+            Debug.Log(pursuit);
         }
 
         //if (alert)
@@ -344,7 +361,5 @@ public class Enemy : MonoBehaviour
         //    Alert(lastKnownLoc);
         //}
 
-      
-        
     }
 }
