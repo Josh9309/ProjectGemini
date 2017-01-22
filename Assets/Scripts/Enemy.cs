@@ -270,6 +270,8 @@ public class Enemy : MonoBehaviour
     {
         if (finished == false)
         {
+           
+            Debug.Log("WORK");
             agent.destination = GameObject.FindGameObjectWithTag("Player").transform.position;
             if (running == false)
             {
@@ -350,7 +352,8 @@ public class Enemy : MonoBehaviour
        
             if (VisionCone() || detectionSphere.PlayerDetected)
             {
-               //alert = true;
+                SoundManager.instance.RandomizeEnemySfx(enemyMove1);
+                //alert = true;
                 pursuit = true;
                 patrol = false;
                 //lastKnownLoc = GameObject.FindGameObjectWithTag("Player").transform.position;
@@ -361,7 +364,7 @@ public class Enemy : MonoBehaviour
 
         if (pursuit)
         {
-            SoundManager.instance.RandomizeEnemySfx(enemyMove1);
+          
             Pursue();
             Debug.Log(pursuit);
         }
