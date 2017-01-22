@@ -60,7 +60,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             float v = CrossPlatformInputManager.GetAxis("Vertical");
 
             //toggle crouch
-            if(Input.GetKeyUp(KeyCode.C) || CrossPlatformInputManager.GetButtonUp("Fire2"))
+            if(Input.GetButtonDown("Crouch"))
             {
                 if(crouchToggle)
                 {
