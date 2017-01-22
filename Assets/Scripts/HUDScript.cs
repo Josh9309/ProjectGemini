@@ -11,6 +11,7 @@ public class HUDScript : MonoBehaviour
     private List<Enemy> enemies;
     private List<key> keys;
     private List<Enemy> enemiesInPursuit;
+    private Color defaultBackCircleColor;
 
     void Start() //Use this for initialization
     {
@@ -29,6 +30,7 @@ public class HUDScript : MonoBehaviour
             {
                 backCircle = allUIImages[i];
                 backCircle.color = new Color(GameManager.playerColor.r, GameManager.playerColor.g, GameManager.playerColor.b, 100/255f);
+                defaultBackCircleColor = backCircle.color;
             }
         }
 
@@ -89,7 +91,7 @@ public class HUDScript : MonoBehaviour
                 else
                 {
                     countdown.text = "!";
-                    backCircle.color = Color.Lerp(GameManager.playerColor, Color.red, Mathf.PingPong(Time.time, 1));
+                    backCircle.color = Color.Lerp(defaultBackCircleColor, Color.red, Mathf.PingPong(Time.time, 1));
                 }
             }
         }
@@ -100,7 +102,7 @@ public class HUDScript : MonoBehaviour
                 if (!e.Pursuit)
                 {
                     countdown.text = ((int)(frontCircle.fillAmount * 100)).ToString();
-                    backCircle.color = GameManager.playerColor;
+                    backCircle.color = defaultBackCircleColor;
                 }
                 else
                 {
