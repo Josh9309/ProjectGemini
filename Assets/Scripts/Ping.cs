@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ping : MonoBehaviour {
     private Player player;
+    public AudioClip wobble;
    
     // Use this for initialization
     void Start () {
@@ -20,6 +21,7 @@ public class Ping : MonoBehaviour {
 
         if(thing.tag == "Enemy")
         {
+            SoundManager.instance.RandomizeWobbleSfx(wobble);
             StartCoroutine(player.HighlightEnemy(thing));
         }
         else if(thing.tag == "IObject")
