@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-
+    private Animator enemyAnim;
     [SerializeField]
     private GameObject target;
     [SerializeField]
@@ -53,6 +53,8 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         detectionSphere = GetComponentInChildren<DetectionSphere>();
         Debug.Log(patrolRoute.Count);
+
+        enemyAnim = GetComponent<Animator>();
 
         visitedWaypoints = new List<bool>();
 
@@ -345,6 +347,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        enemyAnim.SetBool("PursuitAnim", pursuit);
 
         if (patrol)
         {

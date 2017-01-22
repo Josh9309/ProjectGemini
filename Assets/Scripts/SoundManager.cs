@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour {
     public AudioSource enemySource;
     public AudioSource musicSource;
     public AudioSource pingSource;
+    public AudioSource wobbleSource;
     public static SoundManager instance = null;
     public float lowPitchRange = .95f;
     public float highPitchRange = 1.05f;
@@ -32,10 +33,12 @@ public class SoundManager : MonoBehaviour {
         efxSource.clip = clip;
         enemySource.clip = clip;
         pingSource.clip = clip;
+        wobbleSource.clip = clip;
 
         efxSource.Play();
         enemySource.Play();
         pingSource.Play();
+        wobbleSource.Play();
     }
 
     public void RandomizeSfx(params AudioClip[] clips)
@@ -75,6 +78,15 @@ public class SoundManager : MonoBehaviour {
         pingSource.clip = clips[randomIndex];
         pingSource.Play();
     }
+    public void RandomizeWobbleSfx(params AudioClip[] clips)
+    {
+        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+        wobbleSource.pitch = randomPitch;
+        int randomIndex = Random.Range(0, clips.Length);
+        wobbleSource.clip = clips[randomIndex];
+        wobbleSource.Play();
+    }
+
     // Use this for initialization
     void Start () {
 		
